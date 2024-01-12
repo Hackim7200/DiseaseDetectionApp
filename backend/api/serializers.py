@@ -7,6 +7,11 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ["id","name","email","password"]     # what feilds do you want to use from the db model
         
         
+        extra_kwargs = {'password':{'write_only':True}} # doesn't return the pwd after registering
+        
+        
+        
+        
         ## this is the middleware i use to hash the passwords
     def create(self, validated_data):
         
