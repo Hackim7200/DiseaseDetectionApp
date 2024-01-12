@@ -1,5 +1,7 @@
 from rest_framework import serializers
 from .models import User
+import jwt
+import datetime
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
