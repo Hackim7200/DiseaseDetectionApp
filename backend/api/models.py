@@ -7,10 +7,13 @@ from django.contrib.auth.models import AbstractUser
 
 
 class User(AbstractUser): #extends abstract user that django already has setup for
-    name = models.CharField(max_length = 255)
-    email = models.CharField(max_length = 255, unique=True)
-    password = models.CharField(max_length=255)
-    username = None
     
+    
+    name = models.CharField(max_length = 255)
+    email = models.EmailField(max_length = 255, unique=True)
+    password = models.CharField(max_length=255)
+    
+    username = None
     USERNAME_FIELD ='email' # allows us to login with email instead of username
+    REQUIRED_FIELDS=[]
     
