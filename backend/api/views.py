@@ -4,6 +4,11 @@ from .serializers import UserSerializer
 from rest_framework.response import Response
 from .models import User
 from rest_framework.exceptions import AuthenticationFailed
+import jwt
+import datetime
+
+from decouple import config
+JWT_SECRET = config('JWT_SECRET')
 
 
 
@@ -34,7 +39,22 @@ class LoginView(APIView):
         if(not user.check_password(password)):
             raise AuthenticationFailed("wrong pwd!")
         
-        return Response({"success"})
+        payload = {
+            "id":user.id,
+            "exp": datetime.datetime.utcnow()+datetime.timedelta(minutes=60), #token lifespan
+            "iat": datetime.datetime.utcnow() # when its created
+        }
+        
+        token = jwt.encode(payload,JWT_SECRET,algorithm="HS256")
+        
+        response = Response()
+        response.set_cookie(key='jwt',value=token,httponly=True)
+        response.data = {
+            "msg":"cookie recieved"  
+        }
+        
+        
+        return response
 
             
             

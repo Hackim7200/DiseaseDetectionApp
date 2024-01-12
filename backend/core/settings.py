@@ -4,7 +4,6 @@ from pathlib import Path
 
 ## Setting up .ENV
 from decouple import config
-
 DEBUG = config('DEBUG', cast=bool)
 SECRET_KEY = config('SECRET_KEY')
 
