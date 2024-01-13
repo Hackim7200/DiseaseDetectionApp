@@ -34,10 +34,10 @@ class LoginView(APIView):
         user = User.objects.filter(email=email).first() #select the user with this email
         
         if(user is None):
-            raise AuthenticationFailed("User not found!")
+            raise AuthenticationFailed({"msg":"User not found!"})
         
         if(not user.check_password(password)):
-            raise AuthenticationFailed("wrong pwd!")
+            raise AuthenticationFailed({"msg":"wrong pwd!"})
         
         payload = {
             "id":user.id,
@@ -60,3 +60,32 @@ class LoginView(APIView):
             
         
 
+class UserView(APIView):
+    def get(self, request):
+        token = request.COOKIES.get('jwt')
+        
+        if( not token):
+            raise AuthenticationFailed({"msg":"No token found"})
+        
+        try:
+            payload = jwt.decode(token,JWT_SECRET, algorithms="HS256")
+        except jwt.ExpiredSignatureError:
+            raise AuthenticationFailed({"msg":"NOT AUTHENTICATED"})
+        
+        
+        user = User.objects.filter(id = payload['id']).first() # get the obj where id = payload
+        
+        serializer = UserSerializer(user)
+        
+        
+        return Response(serializer.data)
+        
+class LogoutView(APIView):
+    def get(self,request):
+        response = Response()
+        response.delete_cookie('jwt')
+        response.data = {"msg":"Cookie deleted"}
+        
+        return response
+        
+        
