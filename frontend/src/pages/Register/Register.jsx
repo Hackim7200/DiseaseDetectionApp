@@ -1,3 +1,4 @@
+import "./Register.css"
 import React, { useEffect, useState } from 'react'
 
 import {faCheck,faTimes,faInfoCircle} from "@fortawesome/free-solid-svg-icons"
@@ -52,19 +53,30 @@ function Register() {
 
 
   return (
+   
     <div>
         
-        Register
+       <form action="">
 
-        <input value={user} type="text" onChange={(e)=>setUser(e.target.value)}/>
-        <label htmlFor="">{JSON.stringify(validName)}</label>
+        <label htmlFor="username">Username</label>
+        <input 
+        value={user}
+        type="text"
+        placeholder='JohnDoe2008'
+        onChange={(e)=>setUser(e.target.value)}
+        />
+       
+       <br />
+       <label htmlFor="password">Password</label>
+        <input value={pwd} 
+        type="password" 
+        onChange={(e)=>setPwd(e.target.value)}/>
 
-        <input value={pwd} type="text" onChange={(e)=>setPwd(e.target.value)}/>
-        <label htmlFor="">{JSON.stringify(validPwd)}</label>
+        <br />
+        <label htmlFor="password">Password re-enter</label>
+        <input value={pwdMatch} type="password" onChange={(e)=>setPwdMatch(e.target.value)}/>
 
-        <input value={pwdMatch} type="text" onChange={(e)=>setPwdMatch(e.target.value)}/>
-        <label htmlFor="">{JSON.stringify(validPwdMatch)}</label>
-
+       </form>
 
 
 
