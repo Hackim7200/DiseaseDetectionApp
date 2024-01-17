@@ -1,7 +1,6 @@
 import "./Register.css"
 import React, { useEffect, useState } from 'react'
 
-import {faCheck,faTimes,faInfoCircle} from "@fortawesome/free-solid-svg-icons"
 
 // regex from ->  https://stackoverflow.com/questions/19605150/regex-for-password-must-contain-at-least-eight-characters-at-least-one-number-a
 
