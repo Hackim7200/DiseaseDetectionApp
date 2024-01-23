@@ -1,10 +1,10 @@
 .outer {
-  border: solid;
   display: flex;
   justify-content: center;
   /* can be use to align horizontal */
   align-items: center;
   /* can be use to align Vertical */
+  padding: 20px;
 
   .wrapper {
     position: relative;
@@ -55,9 +55,6 @@
     /* can be use to align horizontal */
     align-items: center;
     /* can be use to align Vertical */
-    
-    
-
   }
   form h3 {
     color: #707070;
@@ -65,7 +62,6 @@
     font-weight: 500;
     margin-left: 10px;
   }
- 
 
   form .text h3 {
     color: #333;
@@ -79,10 +75,15 @@
   form .text h3 a:hover {
     text-decoration: underline;
   }
+  .submitBtn {
+    display: flex;
+    justify-content: center;
+    /* can be use to align horizontal */
+    align-items: center;
+    /* can be use to align Vertical */
+  }
 
- 
-  input[type=checkbox] {
+  input[type="checkbox"] {
     appearance: checkbox !important;
+  }
 }
-}
-
