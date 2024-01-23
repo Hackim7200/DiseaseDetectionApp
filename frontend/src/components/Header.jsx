@@ -5,7 +5,7 @@ import Logo from "./Logo";
 function Header() {
   return (
     <div id="header-wrapper">
-      <header id="header" class="container">
+      <header id="header" className="container">
         {/* <!-- Logo --> */}
         <Logo/>
         {/* <!-- Nav --> */}

@@ -4,7 +4,7 @@ function Nav() {
   return (
     <nav id="nav">
       <ul>
-        <li class="current">
+        <li className="current">
           <a href="index.html">Welcome</a>
         </li>
         <li>

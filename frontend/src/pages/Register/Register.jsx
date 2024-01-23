@@ -1,4 +1,4 @@
-import "./Register.css"
+import "./Register.scss"
 import React, { useEffect, useState } from 'react'
 
 

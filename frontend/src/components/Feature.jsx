@@ -7,15 +7,15 @@ import pic03 from "../images/plantImg3.jpeg";
 function Feature() {
   return (
     <div id="features-wrapper">
-      <div class="container">
-        <div class="row">
-          <div class="col-4 col-12-medium">
+      <div className="container">
+        <div className="row">
+          <div className="col-4 col-12-medium">
             {/* <!-- Box --> */}
-            <section class="box feature">
-              <a href="#" class="image featured">
+            <section className="box feature">
+              <a href="#" className="image featured">
                 <img src={pic01} alt="" />
               </a>
-              <div class="inner">
+              <div className="inner">
                 <header>
                   <h2>Pepermint plant</h2>
                   <p>Maybe here as well I think</p>
@@ -27,13 +27,13 @@ function Feature() {
               </div>
             </section>
           </div>
-          <div class="col-4 col-12-medium">
+          <div className="col-4 col-12-medium">
             {/* <!-- Box --> */}
-            <section class="box feature">
-              <a href="#" class="image featured">
+            <section className="box feature">
+              <a href="#" className="image featured">
                 <img src={pic02} alt="" />
               </a>
-              <div class="inner">
+              <div className="inner">
                 <header>
                   <h2>Pine tree</h2>
                   <p>This is also an interesting subtitle</p>
@@ -45,13 +45,13 @@ function Feature() {
               </div>
             </section>
           </div>
-          <div class="col-4 col-12-medium">
+          <div className="col-4 col-12-medium">
             {/* <!-- Box --> */}
-            <section class="box feature">
-              <a href="#" class="image featured">
+            <section className="box feature">
+              <a href="#" className="image featured">
                 <img src={pic03} alt="" />
               </a>
-              <div class="inner">
+              <div className="inner">
                 <header>
                   <h2>Peace lilly</h2>
                   <p>Here's another intriguing subtitle</p>

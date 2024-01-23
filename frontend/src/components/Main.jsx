@@ -6,13 +6,13 @@ import SideBar from "./SideBar";
 function Main() {
   return (
     <div id="main-wrapper">
-      <div class="container">
-        <div class="row gtr-200">
-          <div class="col-4 col-12-medium">
+      <div className="container">
+        <div className="row gtr-200">
+          <div className="col-4 col-12-medium">
             {/* <!-- Sidebar --> */}
             <SideBar/>
           </div>
-          <div class="col-8 col-12-medium imp-medium">
+          <div className="col-8 col-12-medium imp-medium">
             {/* <!-- Content --> */}
             <Content/>
             

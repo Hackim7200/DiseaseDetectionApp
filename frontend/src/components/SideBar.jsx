@@ -6,33 +6,33 @@ import pic07 from "../images/pic07.jpg";
 function SideBar() {
   return (
     <div id="sidebar">
-              <section class="widget thumbnails">
+              <section className="widget thumbnails">
                 <h3>Interesting stuff</h3>
-                <div class="grid">
-                  <div class="row gtr-50">
-                    <div class="col-6">
-                      <a href="#" class="image fit">
+                <div className="grid">
+                  <div className="row gtr-50">
+                    <div className="col-6">
+                      <a href="#" className="image fit">
                         <img src={pic04} alt="" />
                       </a>
                     </div>
-                    <div class="col-6">
-                      <a href="#" class="image fit">
+                    <div className="col-6">
+                      <a href="#" className="image fit">
                         <img src={pic05} alt="" />
                       </a>
                     </div>
-                    <div class="col-6">
-                      <a href="#" class="image fit">
+                    <div className="col-6">
+                      <a href="#" className="image fit">
                         <img src={pic06} alt="" />
                       </a>
                     </div>
-                    <div class="col-6">
-                      <a href="#" class="image fit">
+                    <div className="col-6">
+                      <a href="#" className="image fit">
                         <img src={pic07} alt="" />
                       </a>
                     </div>
                   </div>
                 </div>
-                <a href="#" class="button icon fa-file-alt">
+                <a href="#" className="button icon fa-file-alt">
                   More
                 </a>
               </section>

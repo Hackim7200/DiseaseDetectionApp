@@ -3,7 +3,7 @@ import React from "react";
 function Content() {
   return (
     <div id="content">
-      <section class="last">
+      <section className="last">
         <h2>So what's this all about?</h2>
         <p>
           This is <strong>Verti</strong>, a free and fully responsive HTML5 site
@@ -22,7 +22,7 @@ function Content() {
           ante risus. Aliquam erat volutpat. Aliquam luctus mattis lectus sit
           amet phasellus quam turpis.
         </p>
-        <a href="#" class="button icon solid fa-arrow-circle-right">
+        <a href="#" className="button icon solid fa-arrow-circle-right">
           Continue Reading
         </a>
       </section>

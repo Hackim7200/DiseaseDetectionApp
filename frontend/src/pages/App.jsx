@@ -6,7 +6,7 @@ import { Outlet } from "react-router-dom";
 function App() {
   return (
     // where output is used you can use it to set the general design of the website e.g., header,footer
-    <body class="is-preload homepage">
+    <div className="is-preload homepage">
       <div id="page-wrapper">
         <Outlet />
       </div>
@@ -19,7 +19,7 @@ function App() {
       <script src="assets/js/breakpoints.min.js"></script>
       <script src="assets/js/util.js"></script>
       <script src="assets/js/main.js"></script>
-    </body>
+    </div>
   );
 }
 
