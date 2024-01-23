@@ -1,6 +1,8 @@
 // which ever page has the outlet comp becomes the layout design
 // import Header from './components/Header'
 import { Outlet } from "react-router-dom";
+import Footer from "../components/Footer";
+import Header from "../components/Header";
 // import Hero from './components/Hero'
 
 function App() {
@@ -8,7 +10,12 @@ function App() {
     // where output is used you can use it to set the general design of the website e.g., header,footer
     <div className="is-preload homepage">
       <div id="page-wrapper">
-        <Outlet />
+        <Header/>
+        
+        {/* This is where everything will apear */}
+        <Outlet />  
+
+        <Footer/>
       </div>
 
       {/* <!-- Scripts --> */}
