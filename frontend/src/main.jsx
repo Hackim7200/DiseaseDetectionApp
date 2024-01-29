@@ -2,6 +2,8 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './pages/App.jsx'
 import './index.css'
+import "react-toastify/dist/ReactToastify.css";
+
 
 import {createBrowserRouter, createRoutesFromElements,Route,RouterProvider} from 'react-router-dom'
 import Home from './pages/Home/Home.jsx';
