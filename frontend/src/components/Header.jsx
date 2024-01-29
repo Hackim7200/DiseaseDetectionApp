@@ -1,5 +1,5 @@
 import React from "react";
-import Nav from "./Nav";
+import Nav from "./Nav/Nav";
 import Logo from "./Logo";
 
 function Header() {
@@ -10,6 +10,8 @@ function Header() {
         <Logo/>
         {/* <!-- Nav --> */}
         {/* <Nav/>  have to create my own  nav component since the menu disapears after reducing screen size */}
+
+        <Nav/>
 
         
       </header>

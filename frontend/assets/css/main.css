@@ -2271,9 +2271,9 @@ input, select, textarea {
 
 		/* Nav */
 
-			#nav {
-				display: none;
-			}
+			/* #nav {
+				display: absolute;
+			} */
 
 		/* Banner */
 

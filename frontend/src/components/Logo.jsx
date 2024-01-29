@@ -11,7 +11,7 @@ function Logo() {
         <Link to="/">LeafLense</Link>
 
       </h1>
-      <span><FontAwesomeIcon icon={faLeaf} size = '4x' /></span>
+      <span><FontAwesomeIcon icon={faLeaf} size = '3x' /></span>
     </div>
   );
 }
