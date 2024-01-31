@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from rest_framework.views import APIView #this is similar flexible way of using API_view["GET"]
 from .serializers import UserSerializer
 from rest_framework.response import Response
+from rest_framework import status
 from .models import User
 from rest_framework.exceptions import AuthenticationFailed
 import jwt
@@ -34,10 +35,10 @@ class LoginView(APIView):
         user = User.objects.filter(email=email).first() #select the user with this email
         
         if(user is None):
-            raise AuthenticationFailed({"msg":"User not found!"})
+            raise AuthenticationFailed({"User not found!"})
         
         if(not user.check_password(password)):
-            raise AuthenticationFailed({"msg":"wrong pwd!"})
+            raise AuthenticationFailed({"wrong pwd!"})
         
         payload = {
             "id":user.id,
@@ -48,10 +49,12 @@ class LoginView(APIView):
         token = jwt.encode(payload,JWT_SECRET,algorithm="HS256")
         
         response = Response()
+        
         response.set_cookie(key='jwt',value=token,httponly=True)
-        response.data = {
-            "msg":"cookie recieved"  
-        }
+        
+        
+        response.data = {"cookie recieved":token  }
+        response.status_code=status.HTTP_200_OK
         
         
         return response
@@ -78,7 +81,7 @@ class UserView(APIView):
         serializer = UserSerializer(user)
         
         
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
         
 class LogoutView(APIView):
     def get(self,request):
@@ -87,5 +90,23 @@ class LogoutView(APIView):
         response.data = {"msg":"Cookie deleted"}
         
         return response
+        
+        
+class SEE_COOKIE(APIView):
+    def get(self,request):
+        
+        # data = {"message": "Hello, world!"}
+        # response = Response(data)
+        # response.set_cookie('my_api_cookie', 'api_cookie_value', max_age=3600)  # Sets a cookie that expires in 1 hour
+        
+        # token = request.COOKIES.get('jwt')
+        my_cookie = request.COOKIES.get('jwt')
+
+        
+        
+        return Response(my_cookie)
+        
+        
+
         
         
