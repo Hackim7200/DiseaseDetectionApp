@@ -5,7 +5,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
+import Axios from "axios";
 
 // regex from ->  https://stackoverflow.com/questions/19605150/regex-for-password-must-contain-at-least-eight-characters-at-least-one-number-a
 
@@ -14,6 +16,8 @@ const USER_REGEX = /^[A-Za-z][A-Za-z0-9_]{7,29}$/;
 const EMAIL_REGEX = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
 function Register() {
+  const navigate = useNavigate();
+
   const [user, setUser] = useState("");
   const [validName, setValidName] = useState(false);
 
@@ -49,6 +53,37 @@ function Register() {
     setErrMsg(""); // reset the error msg anytime changes made
   }, [pwd, user, pwdMatch]);
 
+
+  
+  const register = async ()=>{
+    try{
+      const formData = new FormData()
+      formData.append('name',user)
+      formData.append('email',email)
+      formData.append('password',pwd)
+
+      const res = await Axios.post("http://127.0.0.1:8000/api/register/",formData)
+      console.log(res.response)
+
+      return navigate('/login')
+
+
+
+    }catch(err){
+      console.log(err.response.data.email[0])
+      const status = err.response.status
+      if(status==400){
+        toast(err.response.data.email[0])
+
+      }
+
+  }}
+
+
+
+
+
+
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log("submitted");
@@ -57,19 +92,27 @@ function Register() {
       toast("Please make sure all the field are correctly provided!!");
     }
 
+
     if (validEmail & validName & validPwdMatch & validPwd) {
-      alert("success");
+      register()
+      
+
     }
+    
+
   };
+
+  const toastLook = {
+    backgroundColor: "crimson",
+    color: "white",
+  }
 
   return (
     <>
+
       <ToastContainer
         closeButton={false} // the close button clashes with the existing css
-        toastStyle={{
-          backgroundColor: "crimson",
-          color: "white",
-        }}
+        toastStyle={toastLook}
       />
 
       <div>
@@ -172,10 +215,8 @@ function Register() {
                 </h3>
               </div>
 
-              {JSON.stringify(user, pwd, pwdMatch)}
-              {JSON.stringify(pwd, pwdMatch)}
-              {JSON.stringify(pwdMatch)}
-              {JSON.stringify(email)}
+
+           
             </form>
           </div>
         </div>

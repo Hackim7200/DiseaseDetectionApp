@@ -14,13 +14,13 @@ function Banner() {
           <div className="col-5 col-12-medium">
             <ul>
               <li>
-                <Link to="home" className="button large icon solid fa-camera">
+                <Link to="/detect" className="button large icon solid fa-camera">
                   let's Detect
                 </Link>
               </li>
               <li>
                 <Link
-                  to="about"
+                  to="/about"
                   className="button alt large icon solid fa-question-circle"
                 >
                   More info

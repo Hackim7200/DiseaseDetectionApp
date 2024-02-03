@@ -12,6 +12,7 @@ import Login from './pages/Login/Login.jsx'
 import Register from './pages/Register/Register.jsx'
 import Detect from './pages/Detect/Detect.jsx'
 import PageNotFound from './pages/PageNotFound/PageNotFound.jsx'
+import Analytics from './pages/Analytics/Analytics.jsx'
 
 
 const router = createBrowserRouter(
@@ -26,6 +27,7 @@ const router = createBrowserRouter(
 
       <Route  path='/about' element={<About/>}/>
       <Route  path='/detect' element={<Detect/>}/>
+      <Route  path='/analytics' element={<Analytics/>}/>
 
       <Route  path='*' element={<PageNotFound/>}/>
 
