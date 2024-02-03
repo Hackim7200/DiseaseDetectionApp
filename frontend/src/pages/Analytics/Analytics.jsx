@@ -2,22 +2,21 @@ import React from "react";
 import "./Analytics.scss";
 import { Link } from "react-router-dom";
 import pic from "../../images/plantImg1.jpeg";
+import { useLocation } from 'react-router-dom'
+
+
 
 function Analytics() {
+  const location = useLocation()
+  const { id } = location.state
+
+
   return (
     <>
-      {/* // <div className="wrapper-custom">
-    //   <div className="main-summary"></div>
-    //  
-    // </div> */}
-
       <div id="banner-wrapper">
         <div id="banner" className="box container">
           <div className="row">
-            {/* <span className="main-img">
-          <img src={pic}/>
-          </span>
-           */}
+       
 
             <div class="container">
               <div class="row gtr-200">
@@ -29,7 +28,7 @@ function Analytics() {
                 <div class="col-8 col-12-medium imp-medium">
                   <div id="content">
                     <section class="last">
-                      <h2>Jasmine Officinale</h2>
+                      <h2>id:{id} Jasmine Officinale</h2>
                       <p>Plant Health Analytics for Jasmine Offcinale</p>
                       <p>
                         <strong>Most probable diseases:</strong>
@@ -52,16 +51,7 @@ function Analytics() {
         </div>
       </div>
 
-      {/* <div className="row-leaf-summary">
-       
-        <div className="leaf-content">
-          
-          <div className="leaf-info">aphids blahh</div>
-        <div className="leaf-disease-percent">90%</div>
-        </div>
-        
-
-      </div> */}
+  
 
       <div className="leaf-analysis-card">
         <div className="fixed-width">
@@ -121,6 +111,10 @@ function Analytics() {
           <h2 className="text-percent">90%</h2>
         </div>
       </div>
+
+
+
+      {/* i could maybe put summary at the end with likely diease using the main feature component */}
     </>
   );
 }
