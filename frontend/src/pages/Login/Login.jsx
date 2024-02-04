@@ -99,7 +99,7 @@ function Login() {
               </h3>
             </div>
           </form>
-          <button onClick={checkCookie}></button>
+          <button onClick={checkCookie}>check cookie</button>
         </div>
       </div>
     </>
