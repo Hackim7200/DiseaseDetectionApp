@@ -7,13 +7,23 @@ import "./Detect.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import PopUp from "../../components/PopUp/PopUp";
 
-FontAwesomeIcon;
 
 function Detect() {
   return (
 
     <>
+    <PopUp>
+
+      <button>hello</button>
+      <button>hello</button>
+      <button>hello</button>
+
+
+
+
+    </PopUp>
 
 
 				<div id="banner-wrapper">
