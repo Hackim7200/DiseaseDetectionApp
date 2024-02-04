@@ -18,7 +18,7 @@ function Home() {
       <Feature />
 
       {/* <!-- Main --> */}
-      <Main />
+      {/* <Main /> */}
 
      
     </>
