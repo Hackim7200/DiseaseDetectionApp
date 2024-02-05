@@ -8,8 +8,25 @@
     margin-bottom: 1rem;
 
 
+
+  }
+  .uploaded-view{
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border: solid;
+
+    button{
+      width: 250px;
+      margin-bottom: 1rem;
+    }
+
+
   }
   .uploadIcon {
+
 
     margin: auto;
     padding-left: 8rem;

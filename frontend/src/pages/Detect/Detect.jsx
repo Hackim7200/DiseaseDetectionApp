@@ -18,7 +18,7 @@ function Detect() {
   return (
     <>
 
-    <form action="submit">
+    <form action="submit">  
       <PopUp>
         <FontAwesomeIcon icon={faCamera} size="5x" />
         <UploadImage />
