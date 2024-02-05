@@ -17,10 +17,13 @@ function Detect() {
 
   return (
     <>
-      <PopUp title="Upload ">
+
+    <form action="submit">
+      <PopUp>
         <FontAwesomeIcon icon={faCamera} size="5x" />
         <UploadImage />
       </PopUp>
+    </form>
 
       <div id="banner-wrapper">
         <div id="banner" class="box container">

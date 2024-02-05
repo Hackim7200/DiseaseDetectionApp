@@ -31,12 +31,12 @@ function App() {
         <script src="assets/js/util.js"></script>
         <script src="assets/js/main.js"></script>
       </div>
-      {/* <MenuPopup/> */}
 
-      {/* <PopupMenu2 />/ */}
-      {/* <PopUp> */}
+
+      <PopupMenu2 />/
+
         
-      {/* </PopUp> */}
+
     </>
   );
 }

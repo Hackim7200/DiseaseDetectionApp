@@ -1,8 +1,18 @@
 .upload-component {
-  border: solid;
-  .icon {
+  // border: solid;
+
+  .plant-upload-name{
+    text-align: center;
+    width: 50%;
+    margin: auto;
+    margin-bottom: 1rem;
+
+
+  }
+  .uploadIcon {
 
     margin: auto;
     padding-left: 8rem;
+
   }
 }
