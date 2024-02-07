@@ -13,6 +13,8 @@ import UploadImage from "../../components/UploadImage/UploadImage";
 function Detect() {
   const pop = () => {
     document.getElementById("overlay").style.display = "block";
+    document.body.classList.add("no-scroll"); // Re-enable scrolling
+
   };
 
   return (

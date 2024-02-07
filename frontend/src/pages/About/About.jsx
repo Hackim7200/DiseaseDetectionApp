@@ -5,12 +5,13 @@ import PopUp from "../../components/PopUp/PopUp";
 function About() {
   return (
     <>
-	<PopUp title="About us">
+
+	{/* <PopUp title="About us">
 
 		<button>new things</button>
 
 
-	</PopUp>
+	</PopUp> */}
 
 
 

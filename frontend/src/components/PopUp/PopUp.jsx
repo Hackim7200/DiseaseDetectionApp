@@ -7,22 +7,14 @@ function PopUp(props) {
 
   const popupTitle = props.title
 
-  const [pop, setPop] = useState(true); // is true once when popup is created 
+ 
 
-
-
-  console.log(pop);
-
-  if (pop) { // if po is true no-scroll is added 
-    document.body.classList.add("no-scroll"); // Re-enable scrolling
-  }
-
-  // return everything to normal
+  // returns everything to normal when x is clicked
   const closePopup = () => {
     console.log("clicked");
     document.getElementById("overlay").style.display = "none"; // to remove pop-up
     document.body.classList.remove("no-scroll"); // Re-enable scrolling
-    setPop(false);
+
   };
 
   return (

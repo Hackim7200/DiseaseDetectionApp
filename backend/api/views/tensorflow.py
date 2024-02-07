@@ -17,13 +17,15 @@ class UploadImage(APIView):
         
         img = request.FILES["img"]
         
-        location = 'media/test/'
+        location = 'media/images/'
         fs = FileSystemStorage(location)
         fileName=fs.save(img.name,img)
         filePath = os.path.join("media","test",fileName)
+        
+        
         # fs.delete(fileName) #this should delete the file if not use  
         
         
         
         
-        return Response("tensorflow")
+        return Response({filePath})
