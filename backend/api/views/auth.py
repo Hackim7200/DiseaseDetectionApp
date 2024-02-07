@@ -1,9 +1,9 @@
 from django.http import HttpResponse
 from rest_framework.views import APIView #this is similar flexible way of using API_view["GET"]
-from .serializers import UserSerializer
+from ..serializers.serializers import UserSerializer
 from rest_framework.response import Response
 from rest_framework import status
-from .models import User
+from ..models import User
 from rest_framework.exceptions import AuthenticationFailed
 import jwt
 import datetime
@@ -12,10 +12,6 @@ from decouple import config
 JWT_SECRET = config('JWT_SECRET')
 
 
-
-
-def hello(reuests):
-    return HttpResponse("hello")
 
 
 class RegisterView(APIView):
