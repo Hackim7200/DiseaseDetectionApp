@@ -17,16 +17,16 @@ function Analytics() {
       <div id="banner-wrapper">
         <div id="banner" className="box container">
           <div className="row">
-            <div class="container">
-              <div class="row gtr-200">
-                <div class="col-4 col-12-medium">
+            <div className="container">
+              <div className="row gtr-200">
+                <div className="col-4 col-12-medium">
                   <div id="sidebar" className="sidebar-img">
                     <img src={pic} />
                   </div>
                 </div>
-                <div class="col-8 col-12-medium imp-medium">
+                <div className="col-8 col-12-medium imp-medium">
                   <div id="content">
-                    <section class="last">
+                    <section className="last">
                       <h2>id:{id} Jasmine Officinale</h2>
                       <p>Plant Health Analytics for Jasmine Offcinale</p>
                       <p>
@@ -111,29 +111,29 @@ function Analytics() {
       </div>
 
       <div id="main-wrapper">
-        <div class="container">
-          <div class="row gtr-200">
-            <div class="col-4 col-12-medium">
+        <div className="container">
+          <div className="row gtr-200">
+            <div className="col-4 col-12-medium">
               {/* <!-- Sidebar --> */}
               <div id="sidebar">
-                <section class="widget thumbnails">
+                <section className="widget thumbnails">
                   <h3>Overview</h3>
-                  <div class="grid">
-                    <div class="row gtr-50">
-                      <div class="col-6">
-                        <span  class="image fit">
+                  <div className="grid">
+                    <div className="row gtr-50">
+                      <div className="col-6">
+                        <span  className="image fit">
                           <img src={pic} alt="" />
                         </span>               </div>
-                      <div class="col-6">
-                        <span  class="image fit">
+                      <div className="col-6">
+                        <span  className="image fit">
                           <img src={pic} alt="" />
                         </span>               </div>
-                      <div class="col-6">
-                        <span  class="image fit">
+                      <div className="col-6">
+                        <span  className="image fit">
                           <img src={pic} alt="" />
                         </span>               </div>
-                      <div class="col-6">
-                        <span class="image fit">
+                      <div className="col-6">
+                        <span className="image fit">
                           <img src={pic} alt="" />
                         </span>
                       </div>
@@ -142,10 +142,10 @@ function Analytics() {
                 </section>
               </div>
             </div>
-            <div class="col-8 col-12-medium imp-medium">
+            <div className="col-8 col-12-medium imp-medium">
               {/* <!-- Content --> */}
               <div id="content">
-                <section class="last">
+                <section className="last">
                   <h2>Summary</h2>
                   <p>
                     This is <strong>Verti</strong>, a free and fully responsive

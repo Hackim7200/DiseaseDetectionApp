@@ -17,3 +17,11 @@ class User(AbstractUser): #extends abstract user that django already has setup f
     USERNAME_FIELD ='email' # allows us to login with email instead of username
     REQUIRED_FIELDS=[]
     
+
+
+
+
+class Image(models.Model):
+    
+    name = models.CharField(max_length=200)
+    img = models.ImageField(upload_to='api/files/covers')

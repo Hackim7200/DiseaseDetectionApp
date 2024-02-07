@@ -1,7 +1,7 @@
 from django.urls import path
 
 from .views.auth import LogoutView,UserView,RegisterView,LoginView,SEE_COOKIE
-from .views.tensorflow import UploadImage
+from .views.plant import UploadImage, PlantImages
 
 
 
@@ -15,7 +15,10 @@ urlpatterns = [
     
     
     
+    
+    
     # The actual api
     path('upload/',UploadImage.as_view()),
+    path('plantimage/',PlantImages.as_view()),
     
 ]

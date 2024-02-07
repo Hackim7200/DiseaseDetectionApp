@@ -16,9 +16,9 @@ function About() {
 
 
       <div id="banner-wrapper">
-        <div id="banner" class="box container">
-          <div class="row">
-            <div class="col-7 col-12-medium">
+        <div id="banner" className="box container">
+          <div className="row">
+            <div className="col-7 col-12-medium">
               <h2>About us</h2>
             </div>
             <p>
@@ -28,7 +28,7 @@ function About() {
               nisi iste. Tenetur possimus cumque esse officiis quos modi autem
               tempora ipsam molestiae!
             </p>
-            {/* <div class="col-5 col-12-medium">
+            {/* <div className="col-5 col-12-medium">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus quasi unde saepe fugiat, similique illo cum, vero, et nam molestias nulla impedit deleniti veniam in cupiditate placeat commodi explicabo error?
 						
 							</div> */}

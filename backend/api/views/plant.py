@@ -4,6 +4,7 @@ from rest_framework import status
 
 from django.core.files.storage import FileSystemStorage
 import os
+from ..models import Image
 
 
 
@@ -29,3 +30,17 @@ class UploadImage(APIView):
         
         
         return Response({filePath})
+    
+class PlantImages(APIView):
+    def get(self, request):
+        img_id = request.data.get('id')
+        
+        img = Image.objects.get(pk=img_id)
+        if img is not None:
+            
+            return Response({img})
+            
+            
+        
+        return Response({"doesnt exist"})
+        

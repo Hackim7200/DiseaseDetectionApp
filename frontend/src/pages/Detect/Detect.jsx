@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import pic01 from "../../images/plantImg2.jpeg";
 import pic02 from "../../images/plantImg2.jpeg";
@@ -9,8 +9,39 @@ import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import PopUp from "../../components/PopUp/PopUp";
 import UploadImage from "../../components/UploadImage/UploadImage";
+import Axios from 'axios'
 
 function Detect() {
+  const [img,setImg] = useState("http://127.0.0.1:8000/media/images/-light-macro-photography-fund-flowering-plant-woody-plant-land-plant-1061092_OqEgHcX.jpg")
+
+
+  const getPlantImg  = async ()=>{
+
+    try{
+
+      const response = await Axios.get("http://127.0.0.1:8000/api/plantimage/")
+      
+      console.log(response.data[0])
+      
+    }catch(err){
+
+      console.log(err)
+
+
+    }
+
+
+  }
+
+  // useEffect(()=>{
+  //   getPlantImg
+
+
+    
+  // },[])
+
+
+
   const pop = () => {
     document.getElementById("overlay").style.display = "block";
     document.body.classList.add("no-scroll"); // Re-enable scrolling
@@ -28,9 +59,10 @@ function Detect() {
     </form>
 
       <div id="banner-wrapper">
-        <div id="banner" class="box container">
-          <div class="row">
-            <div class="col-7 col-12-medium">
+        <button onClick={()=>{getPlantImg()}}>hellow</button>
+        <div id="banner" className="box container">
+          <div className="row">
+            <div className="col-7 col-12-medium">
               <h2>Detect</h2>
             </div>
             <p>
@@ -64,20 +96,20 @@ function Detect() {
         {/* // <!-- Features --> */}
 
         <div id="features-wrapper">
-          <div class="container">
-            <div class="row">
-              <div class="col-4 col-12-medium">
+          <div className="container">
+            <div className="row">
+              <div className="col-4 col-12-medium">
                 {/* <!-- Box --> */}
                 <Link
                   style={{ all: "unset" }}
                   to="/analytics"
                   state={{ id: 0 }}
                 >
-                  <section class="box feature">
-                    <span class="image featured">
-                      <img src={pic01} alt="" />
+                  <section className="box feature">
+                    <span className="image featured">
+                      <img src={img} alt="" />
                     </span>
-                    <div class="inner">
+                    <div className="inner">
                       <header>
                         <h2>Put something here</h2>
                         <p>Maybe here as well I think</p>
@@ -91,18 +123,18 @@ function Detect() {
                   </section>
                 </Link>
               </div>
-              <div class="col-4 col-12-medium">
+              <div className="col-4 col-12-medium">
                 {/* <!-- Box --> */}
                 <Link
                   style={{ all: "unset" }}
                   to="/analytics"
                   state={{ id: 0 }}
                 >
-                  <section class="box feature">
-                    <span class="image featured">
+                  <section className="box feature">
+                    <span className="image featured">
                       <img src={pic01} alt="" />
                     </span>
-                    <div class="inner">
+                    <div className="inner">
                       <header>
                         <h2>Put something here</h2>
                         <p>Maybe here as well I think</p>
@@ -116,18 +148,18 @@ function Detect() {
                   </section>
                 </Link>
               </div>
-              <div class="col-4 col-12-medium">
+              <div className="col-4 col-12-medium">
                 {/* <!-- Box --> */}
                 <Link
                   style={{ all: "unset" }}
                   to="/analytics"
                   state={{ id: 0 }}
                 >
-                  <section class="box feature">
-                    <span class="image featured">
+                  <section className="box feature">
+                    <span className="image featured">
                       <img src={pic01} alt="" />
                     </span>
-                    <div class="inner">
+                    <div className="inner">
                       <header>
                         <h2>Put something here</h2>
                         <p>Maybe here as well I think</p>
