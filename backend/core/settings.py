@@ -1,6 +1,7 @@
 
 
 from pathlib import Path
+import os
 
 ## Setting up .ENV
 from decouple import config
@@ -133,4 +134,9 @@ AUTH_USER_MODEL = 'api.User'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# for image import
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # media directory in the root directory
+MEDIA_URL = '/media/'
 
