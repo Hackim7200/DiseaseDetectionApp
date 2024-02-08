@@ -7,7 +7,7 @@ from django.contrib.auth.models import AbstractUser
 
 
 class User(AbstractUser): #extends abstract user that django already has setup for
-    
+     
     
     name = models.CharField(max_length = 255)
     email = models.EmailField(max_length = 255, unique=True)
@@ -24,4 +24,4 @@ class User(AbstractUser): #extends abstract user that django already has setup f
 class Image(models.Model):
     
     name = models.CharField(max_length=200)
-    img = models.ImageField(upload_to='api/files/covers')
+    img = models.ImageField(upload_to='')

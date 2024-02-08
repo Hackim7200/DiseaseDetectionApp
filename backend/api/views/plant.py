@@ -5,42 +5,68 @@ from rest_framework import status
 from django.core.files.storage import FileSystemStorage
 import os
 from ..models import Image
+from ..serializers import ImageSerializer
 
 
+from rest_framework.exceptions import AuthenticationFailed
+import jwt
 
 
+from decouple import config
+JWT_SECRET = config('JWT_SECRET')
 
 
 class UploadImage(APIView):
     def post(self,request):
         
-        name = request.data.get("name")
-        
-        img = request.FILES["img"]
-        
-        location = 'media/images/'
-        fs = FileSystemStorage(location)
-        fileName=fs.save(img.name,img)
-        filePath = os.path.join("media","test",fileName)
-        
-        
-        # fs.delete(fileName) #this should delete the file if not use  
+        # name = request.data.get("name")
+        # img = request.FILES["img"]
         
         
         
+        serializer = ImageSerializer(data = request.data)
         
-        return Response({filePath})
+        if serializer.is_valid():
+            serializer.save()
+            
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    
+    
+    
     
 class PlantImages(APIView):
     def get(self, request):
-        img_id = request.data.get('id')
         
-        img = Image.objects.get(pk=img_id)
-        if img is not None:
-            
-            return Response({img})
-            
-            
+        token = request.COOKIES.get('jwt')
         
-        return Response({"doesnt exist"})
+        if( not token):
+            raise AuthenticationFailed({"msg":"No token found"})
+        
+        try:
+            payload = jwt.decode(token,JWT_SECRET, algorithms="HS256")
+        except jwt.ExpiredSignatureError:
+            raise AuthenticationFailed({"msg":"NOT AUTHENTICATED"})
+        
+        user_id = payload
+        
+        
+        
+        
+        
+        # next step get images for a specific person
+        image = Image.objects.all()
+        
+
+            
+        serializer = ImageSerializer(image,many =True)
+            
+        return Response(serializer.data,status=status.HTTP_200_OK)
+        
+        
+        # return Response({"doesnt exist"},status=status.HTTP_204_NO_CONTENT)
         
