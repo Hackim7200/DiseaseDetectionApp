@@ -19,8 +19,7 @@ JWT_SECRET = config('JWT_SECRET')
 class UploadImage(APIView):
     def post(self,request):
         
-        # name = request.data.get("name")
-        # img = request.FILES["img"]
+        
         
         
         
@@ -45,12 +44,12 @@ class PlantImages(APIView):
         token = request.COOKIES.get('jwt')
         
         if( not token):
-            raise AuthenticationFailed({"msg":"No token found"})
+            raise AuthenticationFailed({"message":"No token found"})
         
         try:
             payload = jwt.decode(token,JWT_SECRET, algorithms="HS256")
         except jwt.ExpiredSignatureError:
-            raise AuthenticationFailed({"msg":"NOT AUTHENTICATED"})
+            raise AuthenticationFailed({"message":"NOT AUTHENTICATED"})
         
         user_id = payload
         

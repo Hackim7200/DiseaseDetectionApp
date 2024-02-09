@@ -25,3 +25,5 @@ class Image(models.Model):
     
     name = models.CharField(max_length=200)
     img = models.ImageField(upload_to='')
+    
+    user = models.ForeignKey(User, on_delete=models.CASCADE) #creates forign key
