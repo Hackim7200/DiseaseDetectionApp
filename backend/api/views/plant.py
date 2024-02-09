@@ -7,13 +7,21 @@ import os
 from ..models import Image,User
 from ..serializers import ImageSerializer
 
-
+from decouple import config
+JWT_SECRET = config('JWT_SECRET')
 from rest_framework.exceptions import AuthenticationFailed
 import jwt
 
+#CNN
+import cv2
+import tensorflow as tf
+from keras.preprocessing import image
+import numpy as np
 
-from decouple import config
-JWT_SECRET = config('JWT_SECRET')
+
+
+
+
 
 
 
@@ -57,24 +65,61 @@ class UploadImage(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     
-    
-    
 class PlantImages(APIView):
     def get(self, request):
         token = request.COOKIES.get('jwt')
         user_id = parseCookie(token)["id"]
         
-
+        # filtering image with specific uid
+        image = Image.objects.filter(user=user_id)
         
-        # next step get images for a specific person
-        image = Image.objects.all()
-        
-
+        if image is None:
+            Response({"message":"no images available"},status=status.HTTP_204_NO_CONTENT)
             
+        # to return many Image objects
         serializer = ImageSerializer(image,many =True)
             
-        return Response(data,status=status.HTTP_200_OK)
+        return Response(serializer.data,status=status.HTTP_200_OK)
+    
+    
+class ValidatePlantImg(APIView):
+    
+    def post(self, request):
+        imgPath = "./media/-light-macro-photography-fund-flowering-plant-woody-plant-land-plant-1061092_CYcfJHT.jpg"
+        
+        imgMatrix = cv2.imread(imgPath)
+        print(imgMatrix)
+        
+        modelPath = os.path.join(".","tensorflow","myModel.h5")
+        
+        # print(os.listdir(modelPath))
+        
+        model = tf.keras.models.load_model(modelPath)
+        imgDimension = 250
+        
+
+        chess_king = image.load_img(imgPath, target_size = (imgDimension,imgDimension )) #rescaling
+        
+        chess_king_ = image.img_to_array(chess_king)
+        chess_king_ = np.expand_dims(chess_king, axis = 0)
+        
+        prediction = model.predict(chess_king_)
+        print(prediction)
         
         
-        # return Response({"doesnt exist"},status=status.HTTP_204_NO_CONTENT)
+
+
+        
+
+
+        
+        
+        
+        
+    
+
+        
+        
+        return Response("prediction",status=status.HTTP_200_OK)
+        
         

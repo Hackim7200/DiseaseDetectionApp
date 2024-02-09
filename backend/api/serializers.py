@@ -22,7 +22,7 @@ class UserSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = User
-        fields = ["id","name","email","password","image"]     # what feilds do you want to use from the db model
+        fields = ["id","name","email","password"]     # what feilds do you want to use from the db model
         
         
         extra_kwargs = {'password':{'write_only':True}} # doesn't return the pwd after registering

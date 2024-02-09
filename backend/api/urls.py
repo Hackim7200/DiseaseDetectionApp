@@ -1,7 +1,7 @@
 from django.urls import path
 
 from .views.auth import LogoutView,UserView,RegisterView,LoginView,SEE_COOKIE
-from .views.plant import UploadImage, PlantImages
+from .views.plant import UploadImage, PlantImages,ValidatePlantImg
 
 
 
@@ -19,6 +19,7 @@ urlpatterns = [
     
     # The actual api
     path('upload/',UploadImage.as_view()),
-    path('plantimage/',PlantImages.as_view()),
+    path('plant_image/',PlantImages.as_view()),
+    path('validate_plant_img/',ValidatePlantImg.as_view()),
     
 ]
