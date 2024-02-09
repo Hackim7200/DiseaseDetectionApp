@@ -16,8 +16,29 @@ from decouple import config
 JWT_SECRET = config('JWT_SECRET')
 
 
+
+
+
+
+def parseCookie(token):
+        
+    if( not token):
+        raise AuthenticationFailed({"message":"No token found"})
+        
+    try:
+        payload = jwt.decode(token,JWT_SECRET, algorithms="HS256")
+    except jwt.ExpiredSignatureError:
+        raise AuthenticationFailed({"message":"NOT AUTHENTICATED"})
+        
+    return payload
+    
+
+
 class UploadImage(APIView):
     def post(self,request):
+        
+        
+        
         
         
         
@@ -40,18 +61,17 @@ class UploadImage(APIView):
     
 class PlantImages(APIView):
     def get(self, request):
-        
         token = request.COOKIES.get('jwt')
+        user_id = parseCookie(token)["id"]
         
-        if( not token):
-            raise AuthenticationFailed({"message":"No token found"})
         
-        try:
-            payload = jwt.decode(token,JWT_SECRET, algorithms="HS256")
-        except jwt.ExpiredSignatureError:
-            raise AuthenticationFailed({"message":"NOT AUTHENTICATED"})
         
-        user_id = payload
+        
+        
+        
+        
+        
+       
         
         
         
@@ -64,7 +84,7 @@ class PlantImages(APIView):
             
         serializer = ImageSerializer(image,many =True)
             
-        return Response(serializer.data,status=status.HTTP_200_OK)
+        return Response(user_id,status=status.HTTP_200_OK)
         
         
         # return Response({"doesnt exist"},status=status.HTTP_204_NO_CONTENT)

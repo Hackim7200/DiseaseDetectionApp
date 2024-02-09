@@ -1,11 +1,24 @@
 from rest_framework import serializers
 from .models import User,Image
 
+    
+class ImageSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Image #<- this is the image model, serializer so serializer can be used to create instance in db aswell
+        fields = ["id","img","name"]
+        
+        
+        
+        
 
 class UserSerializer(serializers.ModelSerializer):
+    image = ImageSerializer(many=True, read_only=True)
+
+    
     class Meta:
         model = User
-        fields = ["id","name","email","password"]     # what feilds do you want to use from the db model
+        fields = ["id","name","email","password","image"]     # what feilds do you want to use from the db model
         
         
         extra_kwargs = {'password':{'write_only':True}} # doesn't return the pwd after registering
@@ -27,11 +40,6 @@ class UserSerializer(serializers.ModelSerializer):
     
     
     
-    
-class ImageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Image #<- this is the image model, serializer so serializer can be used to create instance in db aswell
-        fields = ["id","img","name"]
     
     
     
