@@ -17,7 +17,7 @@ class ImageSerializer(serializers.ModelSerializer):
         
 
 class UserSerializer(serializers.ModelSerializer):
-    image = ImageSerializer(many=True, read_only=True)
+    # image = ImageSerializer(many=True, read_only=True)
 
     
     class Meta:

@@ -1,14 +1,22 @@
 // which ever page has the outlet comp becomes the layout design
 // import Header from './components/Header'
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import MenuPopup from "../components/MenuPopup/MenuPopup.jsx";
 import PopupMenu2 from "../components/PopupMenu2/PopupMenu2.jsx";
 import PopUp from "../components/PopUp/PopUp.jsx";
+import  Axios  from "axios";
+import { useEffect, useState } from "react";
 // import Hero from './components/Hero'
 
+
+
 function App() {
+
+
+
+
   return (
     // where output is used you can use it to set the general design of the website e.g., header,footer
     <>
@@ -31,13 +39,10 @@ function App() {
         <script src="assets/js/util.js"></script>
         <script src="assets/js/main.js"></script>
       </div>
-
-
       <PopupMenu2 />/
-
-        
-
     </>
+
+  
   );
 }
 

@@ -13,17 +13,8 @@ const menuClicked = () => {
 function Nav() {
 
   const navigate = useNavigate()
-  const [loggedIn, setLoggedIn] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false);
   
-
-  useEffect(()=>{
-    if(!loggedIn){
-      console.log("/register")
-      navigate("/register")
-    }
-
-  },[])
-
 
   return (
     <div className="navbar">

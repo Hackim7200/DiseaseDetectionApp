@@ -65,7 +65,7 @@ class UploadImage(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     
-class PlantImages(APIView):
+class PlantHistory(APIView):
     def get(self, request):
         token = request.COOKIES.get('jwt')
         user_id = parseCookie(token)["id"]
@@ -104,7 +104,10 @@ class ValidatePlantImg(APIView):
         chess_king_ = np.expand_dims(chess_king, axis = 0)
         
         prediction = model.predict(chess_king_)
-        print(prediction)
+        print(prediction[0][0])
+        
+        
+        
         
         
 
@@ -120,6 +123,6 @@ class ValidatePlantImg(APIView):
 
         
         
-        return Response("prediction",status=status.HTTP_200_OK)
+        return Response(prediction,status=status.HTTP_200_OK)
         
         
