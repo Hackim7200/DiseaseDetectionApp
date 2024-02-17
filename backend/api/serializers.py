@@ -6,7 +6,7 @@ class ImageSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Image #<- this is the image model, serializer so serializer can be used to create instance in db aswell
-        fields = ["id","img","name","user"]
+        fields = ["id","img","name","user","message"]
         
     def create(self, validated_data):
         # Create a new Image instance with validated data, including the user
@@ -17,7 +17,7 @@ class ImageSerializer(serializers.ModelSerializer):
         
 
 class UserSerializer(serializers.ModelSerializer):
-    # image = ImageSerializer(many=True, read_only=True)
+
 
     
     class Meta:

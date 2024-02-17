@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import pic01 from "../../images/plantImg2.jpeg";
 import pic02 from "../../images/plantImg2.jpeg";
@@ -12,8 +12,10 @@ import UploadImage from "../../components/UploadImage/UploadImage";
 import Axios from "axios";
 
 function Detect() {
-  function chunkArrayIntoArray(array, chunkSize) {
+  function putArrayIntoGroups(array, chunkSize) {
     const chunkedArray = [];
+
+    if(array.length===0)return chunkedArray;
     for (let i = 0; i < array.length; i += chunkSize) {
       chunkedArray.push(array.slice(i, i + chunkSize));
     }
@@ -21,50 +23,30 @@ function Detect() {
   }
 
   const host = "http://127.0.0.1:8000";
-  const [img, setImg] = useState(
-    "http://127.0.0.1:8000/media/images/-light-macro-photography-fund-flowering-plant-woody-plant-land-plant-1061092_OqEgHcX.jpg"
-  );
-  const [historyObj, setHistoryObj] = useState([
-    {
-      id: 5,
-      img: "/media/-light-macro-photography-fund-flowering-plant-woody-plant-land-plant-1061092_CYcfJHT.jpg",
-      name: "jasminum offcinale",
-      user: 18,
-    },
-    {
-      id: 6,
-      img: "/media/-light-macro-photography-fund-flowering-plant-woody-plant-land-plant-1061092_fkC0b9M.jpg",
-      name: "jasminum offcinale",
-      user: 18,
-    },
-    {
-      id: 7,
-      img: "/media/-light-macro-photography-fund-flowering-plant-woody-plant-land-plant-1061092_gmGqTre.jpg",
-      name: "jasminum offcinale",
-      user: 18,
-    },
-    {
-      id: 7,
-      img: "/media/-light-macro-photography-fund-flowering-plant-woody-plant-land-plant-1061092_gmGqTre.jpg",
-      name: "jasminum offcinale",
-      user: 18,
-    },
-    {
-      id: 7,
-      img: "/media/-light-macro-photography-fund-flowering-plant-woody-plant-land-plant-1061092_gmGqTre.jpg",
-      name: "jasminum offcinale",
-      user: 18,
-    },
-    {
-      id: 7,
-      img: "/media/-light-macro-photography-fund-flowering-plant-woody-plant-land-plant-1061092_gmGqTre.jpg",
-      name: "jasminum offcinale",
-      user: 18,
-    },
-  ]);
 
-  const processedData = chunkArrayIntoArray(historyObj, 3);
-  console.log(processedData);
+  const [historyObj, setHistoryObj] = useState([]);
+
+
+  const getHistoryData = async () => {
+    try {
+      const response = await Axios.get(
+        "http://127.0.0.1:8000/api/plant_history/",
+        {
+          withCredentials: true, // Important for sending cookies
+        }
+      );
+
+      setHistoryObj(putArrayIntoGroups(response.data, 3));
+
+      
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
+  useEffect(() => {
+    getHistoryData();
+  }, []);
 
   const pop = () => {
     document.getElementById("overlay").style.display = "block";
@@ -73,21 +55,15 @@ function Detect() {
 
   return (
     <>
-      <form action="submit">
+
         <PopUp>
           <FontAwesomeIcon icon={faCamera} size="5x" />
           <UploadImage />
         </PopUp>
-      </form>
+
 
       <div id="banner-wrapper">
-        <button
-          onClick={() => {
-            getPlantImg();
-          }}
-        >
-          hellow
-        </button>
+    
         <div id="banner" className="box container">
           <div className="row">
             <div className="col-7 col-12-medium">
@@ -125,36 +101,44 @@ function Detect() {
 
         <div id="features-wrapper">
           <div className="container">
-            {processedData.map((obj, index) => (
-              <div className="row">
-                {obj.map((data, index) => (
-                  <div className="col-4 col-12-medium" style={{marginBottom:"1rem"}}>
-                    <Link
-                      style={{ all: "unset" }}
-                      to="/analytics"
-                      state={{ id: data.id }}
-                    >
-                      <section className="box feature">
-                        <span className="image featured">
-                          <img src={host + data.img} alt="" />
-                        </span>
-                        <div className="inner">
-                          <header>
-                            <h2>{data.name}</h2>
-                            <p>Maybe here as well I think</p>
-                          </header>
-                          <p>
-                            Phasellus quam turpis, feugiat sit amet in,
-                            hendrerit in lectus. Praesent sed semper amet
-                            bibendum tristique fringilla.
-                          </p>
-                        </div>
-                      </section>
-                    </Link>
+            {historyObj.length === 0 ? (
+              <p>The array is empty.</p>
+            ) : (
+              <>
+                {historyObj.map((obj, index) => (
+                  <div className="row" key={index}>
+                    {obj.map((data, index1) => (
+                      <div
+                        className="col-4 col-12-medium"
+                        style={{ marginBottom: "1rem" }}
+                        key={index1}
+                      >
+                        <Link
+                          style={{ all: "unset" }}
+                          to="/analytics"
+                          state={{ id: data.id }}
+                        >
+                          <section className="box feature">
+                            <span className="image featured">
+                              <img src={host + data.img} alt="" />
+                            </span>
+                            <div className="inner">
+                              <header>
+                                <h2>{data.name}</h2>
+                                <p>Maybe here as well I think</p>
+                              </header>
+                              <p>
+                                {data.message}
+                              </p>
+                            </div>
+                          </section>
+                        </Link>
+                      </div>
+                    ))}
                   </div>
                 ))}
-              </div>
-            ))}
+              </>
+            )}
           </div>
         </div>
       </div>
