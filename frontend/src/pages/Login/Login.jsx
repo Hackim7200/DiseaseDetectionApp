@@ -1,16 +1,28 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./Login.scss";
 import { ToastContainer, toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import Axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+import { LoginContext } from "../../context/Context";
 // const EMAIL_REGEX = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
 function Login() {
   const [email, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
 
+  
+  //redirect if logged in already
+  const { logged } = useContext(LoginContext);
+  if(logged){
+    return <Navigate to="/" replace={true} />
+  }
+  
+  
+  
+  
+  
   const login = async () => {
     try {
       const formData = new FormData();
@@ -25,6 +37,8 @@ function Login() {
         }
       );
       console.log("Login Successful:", response.data);
+      window.location.reload();
+
 
       // Handle further logic here (like redirecting the user or setting state)
     } catch (error) {
@@ -33,12 +47,9 @@ function Login() {
     }
   };
 
-
-
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log("submitted");
-
     login();
   };
 

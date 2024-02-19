@@ -1,22 +1,29 @@
 import "./Register.scss";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import Axios from "axios";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
-import Axios from "axios";
+import { LoginContext } from "../../context/Context";
+
 
 // regex from ->  https://stackoverflow.com/questions/19605150/regex-for-password-must-contain-at-least-eight-characters-at-least-one-number-a
-
 const PWD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 const USER_REGEX = /^[A-Za-z][A-Za-z0-9_]{7,29}$/;
 const EMAIL_REGEX = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
 function Register() {
   const navigate = useNavigate();
+
+    // redirect if logged in already
+    const { logged } = useContext(LoginContext);
+    if(logged){
+      return <Navigate to="/" replace={true} />
+    }
 
   const [user, setUser] = useState("");
   const [validName, setValidName] = useState(false);
@@ -40,7 +47,6 @@ function Register() {
 
   useEffect(() => {
     setValidPwd(PWD_REGEX.test(pwd)); //.test return true if matche else false
-
     if (pwd == pwdMatch && pwd != "") { 
       setValidPwdMatch(true);
     } else setValidPwdMatch(false);
@@ -61,6 +67,7 @@ function Register() {
       console.log(res.response);
 
       return navigate("/login");
+
     } catch (err) {
       console.log(err.response.data.email[0]);
       const status = err.response.status;
