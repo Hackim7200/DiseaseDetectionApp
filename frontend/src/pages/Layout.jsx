@@ -15,8 +15,6 @@ import { useEffect, useState } from "react";
 function App() {
 
 
-
-
   return (
     // where output is used you can use it to set the general design of the website e.g., header,footer
     <>
