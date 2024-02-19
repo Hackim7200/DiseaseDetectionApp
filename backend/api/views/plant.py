@@ -19,15 +19,6 @@ from keras.preprocessing import image
 import numpy as np
 
 
-
-
-
-
-
-
-
-
-
 def parseCookie(token):
         
     if( not token):
@@ -105,24 +96,7 @@ class ValidatePlantImg(APIView):
         
         prediction = model.predict(chess_king_)
         print(prediction[0][0])
-        
-        
-        
-        
-        
 
-
-        
-
-
-        
-        
-        
-        
-    
-
-        
-        
         return Response(prediction,status=status.HTTP_200_OK)
         
         

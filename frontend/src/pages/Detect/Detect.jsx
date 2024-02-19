@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import pic01 from "../../images/plantImg2.jpeg";
 import pic02 from "../../images/plantImg2.jpeg";
@@ -10,8 +10,16 @@ import { Link, json } from "react-router-dom";
 import PopUp from "../../components/PopUp/PopUp";
 import UploadImage from "../../components/UploadImage/UploadImage";
 import Axios from "axios";
+import { LoginContext } from "../../context/Context";
+
+
+
 
 function Detect() {
+  const { logged, setLogged } = useContext(LoginContext);
+
+
+  
   function putArrayIntoGroups(array, chunkSize) {
     const chunkedArray = [];
 
@@ -67,7 +75,7 @@ function Detect() {
         <div id="banner" className="box container">
           <div className="row">
             <div className="col-7 col-12-medium">
-              <h2>Detect</h2>
+              <h2>Detect {JSON.stringify(logged)}</h2>
             </div>
             <p>
               Here you can search previous detection history or detect new

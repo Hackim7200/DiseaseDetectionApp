@@ -1,9 +1,20 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./About.scss";
 import PopUp from "../../components/PopUp/PopUp";
 import Axios from "axios";
 
+
+
+import { LoginContext } from "../../context/Context";
+
+
+
 function About() {
+
+  const { logged, setLogged } = useContext(LoginContext);
+
+
+
 
   const checkCookie = async () => {
     try {
@@ -48,9 +59,10 @@ function About() {
         <div id="banner" className="box container">
           <div className="row">
             <div className="col-7 col-12-medium">
-              <h2>About us</h2>
+              <h2>About us {JSON.stringify(logged)}</h2>
             </div>
             <button onClick={()=>checkCookie()}>Check cookie</button>
+            <button onClick={()=>setLogged(!logged)}>change context val</button>
             <p>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime
               dolores quis aut, voluptas voluptatem sapiente natus aspernatur
