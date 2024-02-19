@@ -24,8 +24,8 @@ function Login() {
           withCredentials: true, // This is important for handling cookies
         }
       );
-
       console.log("Login Successful:", response.data);
+
       // Handle further logic here (like redirecting the user or setting state)
     } catch (error) {
       console.error("Login error:", error.response);
@@ -33,16 +33,7 @@ function Login() {
     }
   };
 
-  const checkCookie = async () => {
-    try {
-      const response = await Axios.get("http://127.0.0.1:8000/api/see/", {
-        withCredentials: true,
-      });
-      console.log("Response:", response.data);
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -99,7 +90,7 @@ function Login() {
               </h3>
             </div>
           </form>
-          <button onClick={checkCookie}></button>
+
         </div>
       </div>
     </>

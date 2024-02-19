@@ -1,0 +1,78 @@
+.popup-overlay {
+  position: fixed;
+  display: none;
+
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2;
+  border: solid;
+
+  .popup-window {
+    position: fixed;
+    background-color: white;
+    width: 30rem;
+    min-height: 35rem;
+    z-index: 3;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    padding-right: 25px;
+    padding-left: 25px;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+
+    .popup-header{
+        display: flex;
+        // to seperate the title and close button
+        justify-content: space-between;
+        align-items: center;
+        .popup-title{
+            margin-left: 10rem;
+        }
+
+        .close-btn {
+
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+            padding: 5px;
+
+
+
+
+
+
+
+        }
+        .close-btn:hover{
+            background-color: aliceblue;
+        }
+    }
+    .popup-content{
+
+
+    }
+
+
+  }
+}
+
+.no-scroll { // for body 
+
+
+    overflow: hidden;
+    position: fixed; //to work on mobile
+    //to stop css breaking due to repositioning
+    height: 100%;
+    width: 100%;
+}

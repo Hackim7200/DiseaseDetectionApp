@@ -1,0 +1,43 @@
+.upload-component {
+  // border: solid;
+
+  .plant-upload-name{
+    text-align: center;
+    width: 50%;
+    margin: auto;
+    margin-bottom: 1rem;
+
+
+
+  }
+  .uploaded-view{
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    img{
+      width:50%}
+
+  
+
+
+
+
+
+    button{
+      width: 250px;
+      margin-bottom: 1rem;
+    }
+
+
+  }
+  .uploadIcon {
+
+
+    margin: auto;
+    padding-left: 8rem;
+
+  }
+}

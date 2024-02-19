@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Nav.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { faBars, faUser } from "@fortawesome/free-solid-svg-icons";
+import { Link, useNavigate } from "react-router-dom";
 
 const menuClicked = () => {
   document.querySelector("body").id = "freezeScroll";
@@ -11,6 +11,11 @@ const menuClicked = () => {
 };
 
 function Nav() {
+
+  const navigate = useNavigate()
+  const [loggedIn, setLoggedIn] = useState(false);
+  
+
   return (
     <div className="navbar">
       <a className="toggle-button" onClick={menuClicked}>
@@ -20,22 +25,32 @@ function Nav() {
       <div className="navbar-links">
         <ul>
           <li className="opener">
-            <Link to='/'>Home</Link>
+            <Link to="/">Home</Link>
           </li>
           <li>
-            <Link to='/about'>About us</Link>
+            <Link to="/about">About us</Link>
           </li>
           <li>
             <Link to="/detect">Detect</Link>
           </li>
-          <li>
-            <Link to="/register">Register</Link>
-          </li>
-          <li>
-            <Link to="/login">Login</Link>
-          </li>
-          
-          
+
+          {loggedIn ? (
+            <li>
+              <Link to="/">
+                <FontAwesomeIcon icon={faUser} />
+              </Link>
+            </li>
+          ) : (
+            <>
+              {" "}
+              <li>
+                <Link to="/register">Register</Link>
+              </li>
+              <li>
+                <Link to="/login">Login</Link>
+              </li>
+            </>
+          )}
         </ul>
       </div>
     </div>

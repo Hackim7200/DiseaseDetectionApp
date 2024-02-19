@@ -30,9 +30,6 @@ function Register() {
   const [pwdMatch, setPwdMatch] = useState("");
   const [validPwdMatch, setValidPwdMatch] = useState(false);
 
-  const [errMsg, setErrMsg] = useState("");
-  const [successMsg, setSuccessMsg] = useState(false);
-
   useEffect(() => {
     setValidName(USER_REGEX.test(user)); //.test return true if matche else false
   }, [user]);
@@ -44,45 +41,34 @@ function Register() {
   useEffect(() => {
     setValidPwd(PWD_REGEX.test(pwd)); //.test return true if matche else false
 
-    if (pwd == pwdMatch) {
+    if (pwd == pwdMatch && pwd != "") { 
       setValidPwdMatch(true);
     } else setValidPwdMatch(false);
   }, [pwd, pwdMatch]);
 
-  useEffect(() => {
-    setErrMsg(""); // reset the error msg anytime changes made
-  }, [pwd, user, pwdMatch]);
 
+  const register = async () => {
+    try {
+      const formData = new FormData();
+      formData.append("name", user);
+      formData.append("email", email);
+      formData.append("password", pwd);
 
-  
-  const register = async ()=>{
-    try{
-      const formData = new FormData()
-      formData.append('name',user)
-      formData.append('email',email)
-      formData.append('password',pwd)
+      const res = await Axios.post(
+        "http://127.0.0.1:8000/api/register/",
+        formData
+      );
+      console.log(res.response);
 
-      const res = await Axios.post("http://127.0.0.1:8000/api/register/",formData)
-      console.log(res.response)
-
-      return navigate('/login')
-
-
-
-    }catch(err){
-      console.log(err.response.data.email[0])
-      const status = err.response.status
-      if(status==400){
-        toast(err.response.data.email[0])
-
+      return navigate("/login");
+    } catch (err) {
+      console.log(err.response.data.email[0]);
+      const status = err.response.status;
+      if (status == 400) {
+        toast(err.response.data.email[0]);
       }
-
-  }}
-
-
-
-
-
+    }
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -92,24 +78,18 @@ function Register() {
       toast("Please make sure all the field are correctly provided!!");
     }
 
-
     if (validEmail & validName & validPwdMatch & validPwd) {
-      register()
-      
-
+      register();
     }
-    
-
   };
 
   const toastLook = {
     backgroundColor: "crimson",
     color: "white",
-  }
+  };
 
   return (
     <>
-
       <ToastContainer
         closeButton={false} // the close button clashes with the existing css
         toastStyle={toastLook}
@@ -214,9 +194,6 @@ function Register() {
                   Already have an account? <Link to="/login">Login now</Link>
                 </h3>
               </div>
-
-
-           
             </form>
           </div>
         </div>
