@@ -24,7 +24,20 @@ class User(AbstractUser): #extends abstract user that django already has setup f
 class Image(models.Model):
     
     name = models.CharField(max_length=200)
-    img = models.ImageField(upload_to='')
-    message = models.TextField()
+    img = models.ImageField(upload_to='plant/')
     
+    
+    
+    message = models.TextField()
     user = models.ForeignKey(User, on_delete=models.CASCADE) #creates forign key
+    
+    
+    
+class Leaf(models.Model):
+    
+    disease = models.CharField(max_length=200)
+    img = models.CharField(max_length=500)
+    percentage = models.CharField(max_length=4)
+    
+    image = models.ForeignKey(Image, on_delete=models.CASCADE) #creates forign key
+

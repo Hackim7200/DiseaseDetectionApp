@@ -94,18 +94,16 @@ class LogoutView(APIView):
         
         
         
-class IsCookieValid(APIView):
+class Authenticate(APIView):
     def get(self,request):
         
         token = request.COOKIES.get('jwt')
-        # parseCookie(token)
-
         
         
-
+        if(token):return Response(status=status.HTTP_200_OK)
         
         
-        return Response({'message':token})
+        return Response(status=status.HTTP_401_UNAUTHORIZED)
         
         
 
