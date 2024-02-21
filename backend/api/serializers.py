@@ -1,7 +1,22 @@
 from rest_framework import serializers
-from .models import User,Image
+from .models import User,Image,Leaf
 
     
+    
+    
+class LeafSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Leaf #<- this is the image model, serializer so serializer can be used to create instance in db aswell
+        fields = ["id","img","percentage","disease","image"]
+        
+    def create(self, validated_data):
+        # Create a new Image instance with validated data, including the user
+        return Leaf.objects.create(**validated_data)
+
+        
+        
+        
 class ImageSerializer(serializers.ModelSerializer):
     
     class Meta:
