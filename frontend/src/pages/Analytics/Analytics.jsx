@@ -12,14 +12,19 @@ import Axios from "axios";
 function Analytics() {
   const host = "http://127.0.0.1:8000";
   const [historyObj, setHistoryObj] = useState([]);
+ 
 
   const location = useLocation();
-  const { id } = location.state;
+  const { id, mainImg} = location.state;
 
   const getHistoryData = async () => {
     try {
-      const response = await Axios.get(
-        "http://127.0.0.1:8000/api/yolo_images/",
+
+      const formData = new FormData()
+      formData.append('id',id)
+
+      const response = await Axios.post(
+        "http://127.0.0.1:8000/api/yolo_images/",formData,
         {
           withCredentials: true, // Important for sending cookies
         }
@@ -44,7 +49,7 @@ function Analytics() {
               <div className="row gtr-200">
                 <div className="col-4 col-12-medium">
                   <div id="sidebar" className="sidebar-img">
-                    <img src={pic} />
+                    <img src={mainImg} />
                   </div>
                 </div>
                 <div className="col-8 col-12-medium imp-medium">
@@ -75,6 +80,10 @@ function Analytics() {
       <div className="card-wrapper">
 
 
+        {historyObj.length === 0 && <p>Array is empty </p>}
+
+
+
         {historyObj.map((obj,index)=>(
            <div className="leaf-analysis-card">
            <div className="fixed-width">
@@ -98,44 +107,7 @@ function Analytics() {
          </div>
         ))}
        
-        <div className="leaf-analysis-card">
-          <div className="fixed-width">
-            <span className="img-span">
-              <img src={pic} alt="" />
-            </span>
-          </div>
-          <div className="flexible-width">
-            <h2>Leaf 1: Rust</h2>
-            <p>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fugit
-              quo quaerat optio qui earum eaque placeat aperiam, voluptatem fuga
-              quia consequatur iusto illo, beatae ad molestias nam quibusdam
-              obcaecati reprehenderit!
-            </p>
-          </div>
-          <div className="fixed-width">
-            <h2 className="text-percent">90%</h2>
-          </div>
-        </div>
-        <div className="leaf-analysis-card">
-          <div className="fixed-width">
-            <span className="img-span">
-              <img src={pic} alt="" />
-            </span>
-          </div>
-          <div className="flexible-width">
-            <h2>Leaf 1: Rust</h2>
-            <p>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fugit
-              quo quaerat optio qui earum eaque placeat aperiam, voluptatem fuga
-              quia consequatur iusto illo, beatae ad molestias nam quibusdam
-              obcaecati reprehenderit!
-            </p>
-          </div>
-          <div className="fixed-width">
-            <h2 className="text-percent">90%</h2>
-          </div>
-        </div>
+      
       </div>
 
       <div id="main-wrapper">
@@ -146,30 +118,32 @@ function Analytics() {
               <div id="sidebar">
                 <section className="widget thumbnails">
                   <h3>Overview</h3>
+
+                  {historyObj.length >=4 &&
                   <div className="grid">
                     <div className="row gtr-50">
                       <div className="col-6">
                         <span className="image fit">
-                          <img src={pic} alt="" />
+                          <img src={host+historyObj[0].img} alt="" />
                         </span>{" "}
                       </div>
                       <div className="col-6">
                         <span className="image fit">
-                          <img src={pic} alt="" />
+                          <img src={host+historyObj[1].img} alt="" />
                         </span>{" "}
                       </div>
                       <div className="col-6">
                         <span className="image fit">
-                          <img src={pic} alt="" />
+                          <img src={host+historyObj[2].img} alt="" />
                         </span>{" "}
                       </div>
                       <div className="col-6">
                         <span className="image fit">
-                          <img src={pic} alt="" />
+                          <img src={host+historyObj[3].img} alt="" />
                         </span>
                       </div>
                     </div>
-                  </div>
+                  </div>}
                 </section>
               </div>
             </div>

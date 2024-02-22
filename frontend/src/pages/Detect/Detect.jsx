@@ -33,6 +33,8 @@ function Detect() {
   const host = "http://127.0.0.1:8000";
 
   const [historyObj, setHistoryObj] = useState([]);
+  console.log(historyObj)
+
 
 
   const getHistoryData = async () => {
@@ -124,7 +126,10 @@ function Detect() {
                         <Link
                           style={{ all: "unset" }}
                           to="/analytics"
-                          state={{ id: data.id }}
+                          state={{ 
+                            id: data.id,
+                            mainImg: host + data.img
+                           }}
                         >
                           <section className="box feature">
                             <span className="image featured">

@@ -22,6 +22,9 @@ import numpy as np
 from ultralytics import YOLO
 from PIL import Image as PilImage
 
+from ..system.ObjectDetector import ObjectDetector
+from ..system.ImageProcessing import ImageProcessing
+
 
 def parseCookie(token):
         
@@ -55,7 +58,13 @@ class UploadImage(APIView):
         serializer = ImageSerializer(data=imageData)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            
+            # imgPath = serializer.data['img']
+            # plantId = serializer.data['id']
+            
+          
+            
+            return Response(serializer.data['img'], status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
@@ -138,6 +147,8 @@ class Yolo(APIView):
         # Bounding box coordinates in xyxy format
         # # bbox = [100, 50, 300, 200]
         # # coord needs to be integers
+        
+        
         for bbox in stack:
             # Convert xyxy to (x_min, y_min, x_max, y_max)
             x_min, y_min, x_max, y_max = map(int, bbox)
@@ -228,21 +239,24 @@ class YoloUpload(APIView):
     
     
 class YoloImages(APIView):
-    def get(self, request):
+    def post(self, request):
         
+        token = request.COOKIES.get('jwt')
+        userId = parseCookie(token)["id"]
         
+
+    
+        plantId = request.data['id']
         
-        plant_id = 1
         
         try:
-            image = Image.objects.get(pk=plant_id)
+            image = Image.objects.get(pk=plantId)
         except Leaf.DoesNotExist:
             return Response({"message": "Plant not found"}, status=status.HTTP_404_NOT_FOUND)
         
-        
           
         # filtering image with specific uid
-        leaf = Leaf.objects.filter(image=plant_id)
+        leaf = Leaf.objects.filter(image=plantId)
         
         if leaf is None:
             Response({"message":"no images available"},status=status.HTTP_204_NO_CONTENT)
@@ -251,3 +265,130 @@ class YoloImages(APIView):
         serializer = LeafSerializer(leaf,many =True)
         
         return Response(serializer.data,status=status.HTTP_200_OK)
+    
+# class Testing(APIView):
+    
+#     def post(self,request):
+        
+        
+        
+#         token = request.COOKIES.get('jwt')
+#         userId = parseCookie(token)["id"]
+        
+#         # Ensure the user exists
+#         try:
+#             user = User.objects.get(pk=userId)
+#         except User.DoesNotExist:
+#             return Response({"message": "User not found"}, status=status.HTTP_404_NOT_FOUND)
+
+#         # Handle image data
+#         imageData = request.data.copy()
+#         imageData['user'] = user.id  # Assign user ID to imageData
+
+#         # Serialize and save image data
+#         serializer = ImageSerializer(data=imageData)
+#         if serializer.is_valid():
+#             serializer.save()
+            
+#             imgPath = './media/plant/pplant_3_j4wLSfk.jpeg'
+#             plantId = 1
+            
+            
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+            
+            
+                
+#         detector = ObjectDetector(imgPath)
+#         bboxes = detector.getBBoxes()
+#         originalImgNp = detector.getOrignalImgNp()
+        
+
+        
+#         imageProcessing =ImageProcessing(originalImgNp,bboxes)
+#         listOfLeavesNp = imageProcessing.getListOfCroppedImgs()
+    
+#         listOfPaths = imageProcessing.saveAllImages(plantId)
+        
+#         print(listOfPaths)
+        
+
+#         ## this is the end 
+        
+#         # Ensure the user exists
+#         try:
+#             imageInstance = Image.objects.get(pk=plantId)
+#         except Leaf.DoesNotExist:
+#             return Response({"message": "Plant not found"}, status=status.HTTP_404_NOT_FOUND)
+        
+#         for path in listOfPaths:
+#             leaf = Leaf(
+#                 disease="newTesting",
+#                 img=path,  
+#                 percentage=0.99,  
+#                 image = imageInstance
+#                 )
+#             leaf.save()
+        
+            
+            
+#             return Response(serializer.data['img'], status=status.HTTP_201_CREATED)
+#         else:
+#             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+        
+        
+
+    
+        
+
+class Testing(APIView):
+    
+    def post(self, request):
+        token = request.COOKIES.get('jwt')
+        userId = parseCookie(token)["id"]
+        
+        # Ensure the user exists
+        try:
+            user = User.objects.get(pk=userId)
+        except User.DoesNotExist:
+            return Response({"message": "User not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        # Handle image data
+        imageData = request.data.copy()
+        imageData['user'] = user.id  # Assign user ID to imageData
+
+        # Serialize and save image data
+        serializer = ImageSerializer(data=imageData)
+        if serializer.is_valid():
+            serializer.save()
+
+            imgPath = serializer.data['img']
+            plantId = serializer.data['id']
+
+            # Image processing
+            detector = ObjectDetector("."+imgPath)
+            bboxes = detector.getBBoxes()
+            originalImgNp = detector.getOrignalImgNp()
+            imageProcessing = ImageProcessing(originalImgNp, bboxes)
+            listOfLeavesNp = imageProcessing.getListOfCroppedImgs()
+            listOfPaths = imageProcessing.saveAllImages(plantId)
+
+            # Ensure the image instance exists
+            try:
+                imageInstance = Image.objects.get(pk=plantId)
+            except Image.DoesNotExist:
+                return Response({"message": "Plant not found"}, status=status.HTTP_404_NOT_FOUND)
+
+            for path in listOfPaths:
+                leaf = Leaf(
+                    disease="final TEST",
+                    img=path,
+                    percentage=0.99,
+                    image=imageInstance
+                )
+                leaf.save()
+
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
