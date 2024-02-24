@@ -11,7 +11,7 @@ import { LoginContext } from "../../context/Context";
 
 function About() {
 
-  const { logged } = useContext(LoginContext);
+  // const { logged } = useContext(LoginContext);
 
 
 
@@ -31,11 +31,13 @@ function About() {
 
 	</PopUp> */}
 
+
+
       <div id="banner-wrapper">
         <div id="banner" className="box container">
           <div className="row">
             <div className="col-7 col-12-medium">
-              <h2>About us {JSON.stringify(logged)}</h2>
+              <h2>About us </h2>
             </div>
 
             <p>

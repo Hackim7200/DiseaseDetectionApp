@@ -16,7 +16,7 @@ import { LoginContext } from "../../context/Context";
 
 
 function Detect() {
-  const { logged, setLogged } = useContext(LoginContext);
+  // const { logged, setLogged } = useContext(LoginContext);
 
 
   
@@ -77,7 +77,7 @@ function Detect() {
         <div id="banner" className="box container">
           <div className="row">
             <div className="col-7 col-12-medium">
-              <h2>Detect {JSON.stringify(logged)}</h2>
+              <h2>Detect </h2>
             </div>
             <p>
               Here you can search previous detection history or detect new
