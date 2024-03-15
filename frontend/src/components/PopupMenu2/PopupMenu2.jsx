@@ -22,13 +22,13 @@ function popupMenu2() {
         <div className="menu-wrapper">
           <ul>
             <li className="opener">
-              <a href="#">Home</a>
+              <a href="/">Home</a>
             </li>
             <li>
-              <a href="#">About</a>
+              <a href="/about">About</a>
             </li>
             <li>
-              <a href="#">Something</a>
+              <a href="/detect">Detect</a>
             </li>
           </ul>
         </div>

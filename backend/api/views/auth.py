@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+
 from rest_framework.views import APIView #this is similar flexible way of using API_view["GET"]
 from ..serializers import UserSerializer
 from rest_framework.response import Response
@@ -62,9 +62,6 @@ class LoginView(APIView):
         
         return response
 
-            
-            
-        
 
 class UserView(APIView):
     def get(self, request):
@@ -81,7 +78,6 @@ class UserView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
     
     
-    
         
 class LogoutView(APIView):
     def get(self,request):
@@ -90,8 +86,6 @@ class LogoutView(APIView):
         response.data = {"msg":"Cookie deleted"}
         
         return response
-        
-        
         
         
 class Authenticate(APIView):

@@ -18,7 +18,7 @@ function Analytics() {
     // Redirect to a default route if location.state is null
     return <Navigate to="/detect" />;
   }
-  const { id, mainImg } = location.state;
+  const { id, mainImg,name } = location.state;
 
   const getHistoryData = async () => {
     try {
@@ -58,7 +58,7 @@ function Analytics() {
                 <div className="col-8 col-12-medium imp-medium">
                   <div id="content">
                     <section className="last">
-                      <h2>id:{id} Jasmine Officinale</h2>
+                      <h2>id:{id} {name}</h2>
                       <p>Plant Health Analytics for Jasmine Offcinale</p>
                       <p>
                         <strong>Most probable diseases:</strong>

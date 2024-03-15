@@ -23,6 +23,7 @@ from ultralytics import YOLO
 from PIL import Image as PilImage
 
 from ..system.ObjectDetector import ObjectDetector
+from ..system.ImageClassification import ImageClassification
 from ..system.ImageProcessing import ImageProcessing
 
 
@@ -89,28 +90,28 @@ class PlantHistory(APIView):
 class ValidatePlantImg(APIView):
     
     def post(self, request):
-        imgPath = "./media/-light-macro-photography-fund-flowering-plant-woody-plant-land-plant-1061092_CYcfJHT.jpg"
-        
-        imgMatrix = cv2.imread(imgPath)
-        print(imgMatrix)
-        
-        modelPath = os.path.join(".","tensorflow","myModel.h5")
-        
-        # print(os.listdir(modelPath))
-        
-        model = tf.keras.models.load_model(modelPath)
-        imgDimension = 250
-        
 
-        chess_king = image.load_img(imgPath, target_size = (imgDimension,imgDimension )) #rescaling
+        # print(os.listdir(os.path.join("media","leaves","Plant33Leave0.png")))
         
-        chess_king_ = image.img_to_array(chess_king)
-        chess_king_ = np.expand_dims(chess_king, axis = 0)
+        classifier = ImageClassification()
+        print(classifier.identifyDisease(os.path.join("media","leaves","Plant33Leave0.png")))
         
-        prediction = model.predict(chess_king_)
-        print(prediction[0][0])
+        
+        # detector = ObjectDetector(os.path.join("media","plant","10ac99415d96657407853ea4d7b1e18e9bca2_HsyC8tO.jpeg"))
+        # bboxes = detector.getBBoxes()
+        # originalImgNp = detector.getOrignalImgNp()
+        # imageProcessing = ImageProcessing(originalImgNp, bboxes)
+        # listOfLeavesNp = imageProcessing.getListOfCroppedImgs()
+        # print(listOfLeavesNp)
+        
+        
+        # print(classifier.identifyDisease2())
 
-        return Response(prediction,status=status.HTTP_200_OK)
+        
+        
+        
+       
+        return Response("prediction",status=status.HTTP_200_OK)
         
         
         
@@ -373,16 +374,26 @@ class Testing(APIView):
             imageProcessing = ImageProcessing(originalImgNp, bboxes)
             listOfLeavesNp = imageProcessing.getListOfCroppedImgs()
             listOfPaths = imageProcessing.saveAllImages(plantId)
+            print(listOfPaths)
+            
+            
 
             # Ensure the image instance exists
             try:
                 imageInstance = Image.objects.get(pk=plantId)
             except Image.DoesNotExist:
                 return Response({"message": "Plant not found"}, status=status.HTTP_404_NOT_FOUND)
+            
+            classifier = ImageClassification()
 
             for path in listOfPaths:
+                
+                
+                # print(classifier.identifyDisease(os.path.join("media","leaves","Plant33Leave0.png")))
+                
+                
                 leaf = Leaf(
-                    disease="final TEST",
+                    disease=classifier.identifyDisease("."+path),
                     img=path,
                     percentage=0.99,
                     image=imageInstance

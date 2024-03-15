@@ -32,10 +32,6 @@ class ObjectDetector:
         
         
         
-        
-        
-        
-        
     def getBBoxes(self):
         
         return self.bboxes

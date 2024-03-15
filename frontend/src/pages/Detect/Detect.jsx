@@ -128,7 +128,8 @@ function Detect() {
                           to="/analytics"
                           state={{ 
                             id: data.id,
-                            mainImg: host + data.img
+                            mainImg: host + data.img,
+                            name: data.name
                            }}
                         >
                           <section className="box feature">
