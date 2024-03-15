@@ -15,7 +15,7 @@ const UploadImage = () => {
       formData.append('message',message)
 
       const response = await Axios.post(
-        "http://127.0.0.1:8000/api/testing/",
+        "http://127.0.0.1:8000/api/DiseaseBreakdownAndDetect/",
         formData,
         {
           withCredentials: true, // Important for sending cookies
