@@ -267,84 +267,12 @@ class YoloImages(APIView):
         
         return Response(serializer.data,status=status.HTTP_200_OK)
     
-# class Testing(APIView):
-    
-#     def post(self,request):
-        
-        
-        
-#         token = request.COOKIES.get('jwt')
-#         userId = parseCookie(token)["id"]
-        
-#         # Ensure the user exists
-#         try:
-#             user = User.objects.get(pk=userId)
-#         except User.DoesNotExist:
-#             return Response({"message": "User not found"}, status=status.HTTP_404_NOT_FOUND)
 
-#         # Handle image data
-#         imageData = request.data.copy()
-#         imageData['user'] = user.id  # Assign user ID to imageData
-
-#         # Serialize and save image data
-#         serializer = ImageSerializer(data=imageData)
-#         if serializer.is_valid():
-#             serializer.save()
-            
-#             imgPath = './media/plant/pplant_3_j4wLSfk.jpeg'
-#             plantId = 1
-            
-            
-#             return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-            
-            
-                
-#         detector = ObjectDetector(imgPath)
-#         bboxes = detector.getBBoxes()
-#         originalImgNp = detector.getOrignalImgNp()
-        
-
-        
-#         imageProcessing =ImageProcessing(originalImgNp,bboxes)
-#         listOfLeavesNp = imageProcessing.getListOfCroppedImgs()
-    
-#         listOfPaths = imageProcessing.saveAllImages(plantId)
-        
-#         print(listOfPaths)
-        
-
-#         ## this is the end 
-        
-#         # Ensure the user exists
-#         try:
-#             imageInstance = Image.objects.get(pk=plantId)
-#         except Leaf.DoesNotExist:
-#             return Response({"message": "Plant not found"}, status=status.HTTP_404_NOT_FOUND)
-        
-#         for path in listOfPaths:
-#             leaf = Leaf(
-#                 disease="newTesting",
-#                 img=path,  
-#                 percentage=0.99,  
-#                 image = imageInstance
-#                 )
-#             leaf.save()
-        
-            
-            
-#             return Response(serializer.data['img'], status=status.HTTP_201_CREATED)
-#         else:
-#             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-        
-        
 
     
         
 
-class Testing(APIView):
-    
+class DiseaseBreakdownAndDetect(APIView):
     def post(self, request):
         token = request.COOKIES.get('jwt')
         userId = parseCookie(token)["id"]
@@ -375,9 +303,6 @@ class Testing(APIView):
             listOfLeavesNp = imageProcessing.getListOfCroppedImgs()
             listOfPaths = imageProcessing.saveAllImages(plantId)
             print(listOfPaths)
-            
-            
-
             # Ensure the image instance exists
             try:
                 imageInstance = Image.objects.get(pk=plantId)
@@ -387,11 +312,7 @@ class Testing(APIView):
             classifier = ImageClassification()
 
             for path in listOfPaths:
-                
-                
                 # print(classifier.identifyDisease(os.path.join("media","leaves","Plant33Leave0.png")))
-                
-                
                 leaf = Leaf(
                     disease=classifier.identifyDisease("."+path),
                     img=path,

@@ -1,7 +1,7 @@
 from django.urls import path
 
 from .views.auth import LogoutView,UserView,RegisterView,LoginView,Authenticate
-from .views.plant import UploadImage, PlantHistory,ValidatePlantImg,Yolo,YoloUpload,YoloImages,Testing
+from .views.plant import UploadImage, PlantHistory,ValidatePlantImg,Yolo,YoloUpload,YoloImages,DiseaseBreakdownAndDetect
 
 
 
@@ -22,6 +22,6 @@ urlpatterns = [
     path('yolo/',Yolo.as_view()),
     path('yolo_upload/',YoloUpload.as_view()),
     path('yolo_images/',YoloImages.as_view()),
-    path('testing/',Testing.as_view()),
+    path('DiseaseBreakdownAndDetect/',DiseaseBreakdownAndDetect.as_view()),
     
 ]
