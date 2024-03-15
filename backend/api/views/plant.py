@@ -22,6 +22,10 @@ import numpy as np
 from ultralytics import YOLO
 from PIL import Image as PilImage
 
+from ..system.ObjectDetector import ObjectDetector
+from ..system.ImageClassification import ImageClassification
+from ..system.ImageProcessing import ImageProcessing
+
 
 def parseCookie(token):
         
@@ -55,7 +59,13 @@ class UploadImage(APIView):
         serializer = ImageSerializer(data=imageData)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            
+            # imgPath = serializer.data['img']
+            # plantId = serializer.data['id']
+            
+          
+            
+            return Response(serializer.data['img'], status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
@@ -80,28 +90,28 @@ class PlantHistory(APIView):
 class ValidatePlantImg(APIView):
     
     def post(self, request):
-        imgPath = "./media/-light-macro-photography-fund-flowering-plant-woody-plant-land-plant-1061092_CYcfJHT.jpg"
-        
-        imgMatrix = cv2.imread(imgPath)
-        print(imgMatrix)
-        
-        modelPath = os.path.join(".","tensorflow","myModel.h5")
-        
-        # print(os.listdir(modelPath))
-        
-        model = tf.keras.models.load_model(modelPath)
-        imgDimension = 250
-        
 
-        chess_king = image.load_img(imgPath, target_size = (imgDimension,imgDimension )) #rescaling
+        # print(os.listdir(os.path.join("media","leaves","Plant33Leave0.png")))
         
-        chess_king_ = image.img_to_array(chess_king)
-        chess_king_ = np.expand_dims(chess_king, axis = 0)
+        classifier = ImageClassification()
+        print(classifier.identifyDisease(os.path.join("media","leaves","Plant33Leave0.png")))
         
-        prediction = model.predict(chess_king_)
-        print(prediction[0][0])
+        
+        # detector = ObjectDetector(os.path.join("media","plant","10ac99415d96657407853ea4d7b1e18e9bca2_HsyC8tO.jpeg"))
+        # bboxes = detector.getBBoxes()
+        # originalImgNp = detector.getOrignalImgNp()
+        # imageProcessing = ImageProcessing(originalImgNp, bboxes)
+        # listOfLeavesNp = imageProcessing.getListOfCroppedImgs()
+        # print(listOfLeavesNp)
+        
+        
+        # print(classifier.identifyDisease2())
 
-        return Response(prediction,status=status.HTTP_200_OK)
+        
+        
+        
+       
+        return Response("prediction",status=status.HTTP_200_OK)
         
         
         
@@ -138,6 +148,8 @@ class Yolo(APIView):
         # Bounding box coordinates in xyxy format
         # # bbox = [100, 50, 300, 200]
         # # coord needs to be integers
+        
+        
         for bbox in stack:
             # Convert xyxy to (x_min, y_min, x_max, y_max)
             x_min, y_min, x_max, y_max = map(int, bbox)
@@ -228,21 +240,24 @@ class YoloUpload(APIView):
     
     
 class YoloImages(APIView):
-    def get(self, request):
+    def post(self, request):
         
+        token = request.COOKIES.get('jwt')
+        userId = parseCookie(token)["id"]
         
+
+    
+        plantId = request.data['id']
         
-        plant_id = 1
         
         try:
-            image = Image.objects.get(pk=plant_id)
+            image = Image.objects.get(pk=plantId)
         except Leaf.DoesNotExist:
             return Response({"message": "Plant not found"}, status=status.HTTP_404_NOT_FOUND)
         
-        
           
         # filtering image with specific uid
-        leaf = Leaf.objects.filter(image=plant_id)
+        leaf = Leaf.objects.filter(image=plantId)
         
         if leaf is None:
             Response({"message":"no images available"},status=status.HTTP_204_NO_CONTENT)
@@ -251,3 +266,61 @@ class YoloImages(APIView):
         serializer = LeafSerializer(leaf,many =True)
         
         return Response(serializer.data,status=status.HTTP_200_OK)
+    
+
+
+    
+        
+
+class DiseaseBreakdownAndDetect(APIView):
+    def post(self, request):
+        token = request.COOKIES.get('jwt')
+        userId = parseCookie(token)["id"]
+        
+        # Ensure the user exists
+        try:
+            user = User.objects.get(pk=userId)
+        except User.DoesNotExist:
+            return Response({"message": "User not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        # Handle image data
+        imageData = request.data.copy()
+        imageData['user'] = user.id  # Assign user ID to imageData
+
+        # Serialize and save image data
+        serializer = ImageSerializer(data=imageData)
+        if serializer.is_valid():
+            serializer.save()
+
+            imgPath = serializer.data['img']
+            plantId = serializer.data['id']
+
+            # Image processing
+            detector = ObjectDetector("."+imgPath)
+            bboxes = detector.getBBoxes()
+            originalImgNp = detector.getOrignalImgNp()
+            imageProcessing = ImageProcessing(originalImgNp, bboxes)
+            listOfLeavesNp = imageProcessing.getListOfCroppedImgs()
+            listOfPaths = imageProcessing.saveAllImages(plantId)
+            print(listOfPaths)
+            # Ensure the image instance exists
+            try:
+                imageInstance = Image.objects.get(pk=plantId)
+            except Image.DoesNotExist:
+                return Response({"message": "Plant not found"}, status=status.HTTP_404_NOT_FOUND)
+            
+            classifier = ImageClassification()
+
+            for path in listOfPaths:
+                # print(classifier.identifyDisease(os.path.join("media","leaves","Plant33Leave0.png")))
+                leaf = Leaf(
+                    disease=classifier.identifyDisease("."+path),
+                    img=path,
+                    percentage=0.99,
+                    image=imageInstance
+                )
+                leaf.save()
+
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

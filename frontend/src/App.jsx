@@ -25,8 +25,6 @@ import { LoginContext } from "./context/Context.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    // App is the theme
-
     <>
       {/* privare routes */}
       <Route element={<PrivateRoutes />}>
@@ -37,7 +35,7 @@ const router = createBrowserRouter(
       </Route>
 
       <Route element={<Layout />}>
-        {/* not prottected routes */}
+        {/* public routes */}
         <Route path="*" element={<PageNotFound />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />

@@ -16,7 +16,7 @@ import { LoginContext } from "../../context/Context";
 
 
 function Detect() {
-  const { logged, setLogged } = useContext(LoginContext);
+  // const { logged, setLogged } = useContext(LoginContext);
 
 
   
@@ -33,6 +33,8 @@ function Detect() {
   const host = "http://127.0.0.1:8000";
 
   const [historyObj, setHistoryObj] = useState([]);
+  console.log(historyObj)
+
 
 
   const getHistoryData = async () => {
@@ -75,7 +77,7 @@ function Detect() {
         <div id="banner" className="box container">
           <div className="row">
             <div className="col-7 col-12-medium">
-              <h2>Detect {JSON.stringify(logged)}</h2>
+              <h2>Detect </h2>
             </div>
             <p>
               Here you can search previous detection history or detect new
@@ -124,7 +126,11 @@ function Detect() {
                         <Link
                           style={{ all: "unset" }}
                           to="/analytics"
-                          state={{ id: data.id }}
+                          state={{ 
+                            id: data.id,
+                            mainImg: host + data.img,
+                            name: data.name
+                           }}
                         >
                           <section className="box feature">
                             <span className="image featured">

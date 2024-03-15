@@ -37,10 +37,10 @@ function MenuPopup() {
               <a href="#">Home</a>
             </li>
             <li>
-              <a href="#">About</a>
+              <a href="#">detect</a>
             </li>
             <li>
-              <a href="#">Something</a>
+              <a href="#">about</a>
             </li>
           </ul>
         </div>

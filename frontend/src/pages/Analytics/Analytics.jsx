@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Analytics.scss";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import pic from "../../images/plantImg1.jpeg";
 import pic0 from "../../images/plantImg1.jpeg";
 import pic1 from "../../images/plantImg1.jpeg";
@@ -14,12 +14,20 @@ function Analytics() {
   const [historyObj, setHistoryObj] = useState([]);
 
   const location = useLocation();
-  const { id } = location.state;
+  if (!location.state) {
+    // Redirect to a default route if location.state is null
+    return <Navigate to="/detect" />;
+  }
+  const { id, mainImg,name } = location.state;
 
   const getHistoryData = async () => {
     try {
-      const response = await Axios.get(
+      const formData = new FormData();
+      formData.append("id", id);
+
+      const response = await Axios.post(
         "http://127.0.0.1:8000/api/yolo_images/",
+        formData,
         {
           withCredentials: true, // Important for sending cookies
         }
@@ -44,13 +52,13 @@ function Analytics() {
               <div className="row gtr-200">
                 <div className="col-4 col-12-medium">
                   <div id="sidebar" className="sidebar-img">
-                    <img src={pic} />
+                    <img src={mainImg} />
                   </div>
                 </div>
                 <div className="col-8 col-12-medium imp-medium">
                   <div id="content">
                     <section className="last">
-                      <h2>id:{id} Jasmine Officinale</h2>
+                      <h2>id:{id} {name}</h2>
                       <p>Plant Health Analytics for Jasmine Offcinale</p>
                       <p>
                         <strong>Most probable diseases:</strong>
@@ -73,69 +81,32 @@ function Analytics() {
         </div>
       </div>
       <div className="card-wrapper">
+        {historyObj.length === 0 && <p>Array is empty </p>}
 
+        {historyObj.map((obj, index) => (
+          <div className="leaf-analysis-card">
+            <div className="fixed-width">
+              <span className="img-span">
+                <img src={host + obj.img} alt="" />
+              </span>
+            </div>
 
-        {historyObj.map((obj,index)=>(
-           <div className="leaf-analysis-card">
-           <div className="fixed-width">
-             <span className="img-span">
-               <img src={host+obj.img} alt="" />
-             </span>
-           </div>
- 
-           <div className="flexible-width">
-             <h2>Leaf {index}: {obj.disease}</h2>
-             <p>
-               Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fugit
-               quo quaerat optio qui earum eaque placeat aperiam, voluptatem fuga
-               quia consequatur iusto illo, beatae ad molestias nam quibusdam
-               obcaecati reprehenderit!
-             </p>
-           </div>
-           <div className="fixed-width">
-             <h2 className="text-percent">{obj.percentage}</h2>
-           </div>
-         </div>
+            <div className="flexible-width">
+              <h2>
+                Leaf {index}: {obj.disease}
+              </h2>
+              <p>
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fugit
+                quo quaerat optio qui earum eaque placeat aperiam, voluptatem
+                fuga quia consequatur iusto illo, beatae ad molestias nam
+                quibusdam obcaecati reprehenderit!
+              </p>
+            </div>
+            <div className="fixed-width">
+              <h2 className="text-percent">{obj.percentage}</h2>
+            </div>
+          </div>
         ))}
-       
-        <div className="leaf-analysis-card">
-          <div className="fixed-width">
-            <span className="img-span">
-              <img src={pic} alt="" />
-            </span>
-          </div>
-          <div className="flexible-width">
-            <h2>Leaf 1: Rust</h2>
-            <p>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fugit
-              quo quaerat optio qui earum eaque placeat aperiam, voluptatem fuga
-              quia consequatur iusto illo, beatae ad molestias nam quibusdam
-              obcaecati reprehenderit!
-            </p>
-          </div>
-          <div className="fixed-width">
-            <h2 className="text-percent">90%</h2>
-          </div>
-        </div>
-        <div className="leaf-analysis-card">
-          <div className="fixed-width">
-            <span className="img-span">
-              <img src={pic} alt="" />
-            </span>
-          </div>
-          <div className="flexible-width">
-            <h2>Leaf 1: Rust</h2>
-            <p>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fugit
-              quo quaerat optio qui earum eaque placeat aperiam, voluptatem fuga
-              quia consequatur iusto illo, beatae ad molestias nam quibusdam
-              obcaecati reprehenderit!
-            </p>
-          </div>
-          <div className="fixed-width">
-            <h2 className="text-percent">90%</h2>
-          </div>
-        </div>
       </div>
 
       <div id="main-wrapper">
@@ -146,30 +117,33 @@ function Analytics() {
               <div id="sidebar">
                 <section className="widget thumbnails">
                   <h3>Overview</h3>
-                  <div className="grid">
-                    <div className="row gtr-50">
-                      <div className="col-6">
-                        <span className="image fit">
-                          <img src={pic} alt="" />
-                        </span>{" "}
-                      </div>
-                      <div className="col-6">
-                        <span className="image fit">
-                          <img src={pic} alt="" />
-                        </span>{" "}
-                      </div>
-                      <div className="col-6">
-                        <span className="image fit">
-                          <img src={pic} alt="" />
-                        </span>{" "}
-                      </div>
-                      <div className="col-6">
-                        <span className="image fit">
-                          <img src={pic} alt="" />
-                        </span>
+
+                  {historyObj.length >= 4 && (
+                    <div className="grid">
+                      <div className="row gtr-50">
+                        <div className="col-6">
+                          <span className="image fit">
+                            <img src={host + historyObj[0].img} alt="" />
+                          </span>{" "}
+                        </div>
+                        <div className="col-6">
+                          <span className="image fit">
+                            <img src={host + historyObj[1].img} alt="" />
+                          </span>{" "}
+                        </div>
+                        <div className="col-6">
+                          <span className="image fit">
+                            <img src={host + historyObj[2].img} alt="" />
+                          </span>{" "}
+                        </div>
+                        <div className="col-6">
+                          <span className="image fit">
+                            <img src={host + historyObj[3].img} alt="" />
+                          </span>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  )}
                 </section>
               </div>
             </div>
